@@ -1,0 +1,103 @@
+:root {
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #DFDFDF;
+    font-family: monospace, monospace;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+}
+
+.header1 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+main {
+    padding: .5rem;
+    box-sizing: border-box;
+    align-self: flex-start;
+}
+
+.current_date {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.form__address {
+    height: 40px;
+    width: 100%;
+    max-width: 400px;
+    font-size: 1rem;
+    padding: 0 .5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+    border: 2px solid #666666;
+}
+
+.form__btn {
+    border: 0;
+    height: 40px;
+    color: #FFFFFF;
+    padding: 0 1rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background-color: #222222;
+}
+
+table {
+    border-style: solid;
+    border-collapse: collapse;
+    border: 2px solid #666666;
+    background-color: #EEEEEE;
+}
+
+tr th,
+tr td {
+    color: #212121;
+    padding: .4rem;
+    border: 2px solid #666666;
+}
+
+tr th {
+    color: #FFFFFF;
+    background-color: #232323;
+    border: 2px solid #666666;
+}
+
+tr:nth-child(odd) {
+    background-color: #C0C0C0;
+}
+
+tbody tr:first-child {
+    color: #CC0000;
+    background-color: yellow;
+}
+
+.links {
+    display: flex;
+    justify-content: space-between;
+}
+
+.link__item {
+    font-size: .8rem;
+}
+
+footer {
+    padding: .5rem;
+}

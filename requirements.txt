@@ -1,0 +1,16 @@
+-i https://pypi.python.org/simple
+babel==2.8.0
+click==7.1.1
+flask-babel==1.0.0
+flask-wtf==0.14.3
+flask==1.1.1
+geographiclib==1.50
+geopy==1.21.0
+itsdangerous==1.1.0
+jinja2==2.11.1
+markupsafe==1.1.1
+nominatim==0.1
+python-dotenv==0.12.0
+pytz==2019.3
+werkzeug==1.0.0
+wtforms==2.2.1

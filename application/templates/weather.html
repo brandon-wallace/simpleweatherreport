@@ -1,0 +1,81 @@
+{# application/templates/index.html #}
+
+{% extends 'base.html' %}
+
+{% block body %}
+
+  <main>
+
+  <header>
+
+    <h1 class="header1">SIMPLE WEATHER REPORT</h1>
+  
+    <form action="{{ url_for('get_local_weather') }}" method="POST">
+  
+      {{ form.csrf_token }}
+      {{ form.address(class_='form__address', placeholder='Enter Location') }}
+      {{ form.submit(class_='form__btn') }}
+  
+    </form>
+  
+    <p class="current_date">{{ date_time }}</p>
+    <p>{{ message if message }}</p>
+    <p class="status"></p>
+    <p class="location"></p>
+  
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>hourly</th>
+          <th>fahrenheit</th>
+          <th>celcius</th>
+          <th>forecast</th>
+          <th>humidity</th>
+          <th>wind_mph</th>
+          <th>uv_index</th>
+          <th>ozone</th>
+          <th>visibility</th>
+          <th>pressure</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        {% for num in range(12) %}
+          <tr>
+            {% if num == 0 %}
+              <td>NOW*</td>
+            {% else %}
+              <td>{{ '{}h'.format(hours[num]) if hours }}</td>
+            {% endif %}
+            <td>{{ '{:.2f}F'.format(temps[num]) if temps }}&#176;</td>
+            <td>{{ '{:.2f}C'.format(temps_celcius[num]) if temps_celcius }}&#176;</td>
+            <td>{{ forecast[num] if forecast }}</td>
+            <td>{{ humidity[num] if humidity }}</td>
+            <td>{{ '{:.2f}'.format(wind_speed[num]) if wind_speed }}</td>
+            <td>{{ uv_index[num] if uv_index }}</td>
+            <td>{{ '{:.1f}'.format(ozone[num]) if ozone }}</td>
+            <td>{{ pressure[num] if pressure }}</td>
+            <td>{{ visibility[num] if visibility }}</td>
+          </tr>
+        {% endfor %}
+
+      </tbody>
+
+    </table>
+
+  </main>
+
+  <footer>
+
+    <div class="links">
+      <p class="link__item">powered by: <a href="https://darksky.net/poweredby/">darksky.net</a></p>
+      <p class="link__item">created by: <a href="https://github.com/brandon-wallace">brandon_wallace</a></p>
+    </div>
+
+  </footer>
+
+{% endblock %}
