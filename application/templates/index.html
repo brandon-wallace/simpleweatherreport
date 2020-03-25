@@ -7,22 +7,36 @@
   <main>
 
   <header>
-    <h1 class="header1">SIMPLE WEATHER REPORT</h1>
-  </header>
+
+    <div class="header__div">
+      <h1 class="header1">SIMPLE WEATHER REPORT</h1>
+    </div>
   
     <form action="{{ url_for('get_local_weather') }}" method="POST">
-  
       {{ form.csrf_token }}
-      {{ form.address(class_='form__address', placeholder='Enter Location') }}
+      {{ form.address(class_='form__address', placeholder='Enter Location or Zip Code') }}
       {{ form.submit(class_='form__btn') }}
-  
     </form>
+
+  </header>
+
+  <h4>Current Conditions:</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>temperature</th>
+        <th>forecast</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ temp if temp }}</td>
+        <td>{{ forecast if forecast }}</td>
+      </tr>
+    </tbody>
+  </table>
   
-    <p class="current_date">{{ date_time }}</p>
-    <p>{{ message if message }}</p>
-    <p class="status"></p>
-    <p class="location"></p>
-  
+  <h4>Hourly:</h4>
     <table>
 
       <thead>
@@ -66,6 +80,25 @@
       </tbody>
 
     </table>
+
+    <table>
+    <tr>
+    <td> <p class="current_date">{{ date_time }}</p> </td>
+    </tr>
+    <tr>
+    <td> <p>location:{{ message if message }}</p> </td>
+    <tr>
+    <td>
+    <p class="status">lat:</p>
+    </td>
+    </tr>
+    <tr>
+    <td>
+    <p class="location">lon:</p>
+    </td>
+    </tr>
+    </table>
+  
 
   </main>
 
