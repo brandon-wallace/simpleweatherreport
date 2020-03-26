@@ -21,7 +21,7 @@ h1, h2, h3, h4, h5, h6, p {
     margin: 0;
 }
 
-.header__div {
+.header__title {
     width: 100%;
     padding: .25rem;
     max-width: 300px;
@@ -30,7 +30,7 @@ h1, h2, h3, h4, h5, h6, p {
     border: 2px solid #666666;
 }
 
-.header1 {
+.header__text {
     width: 100%;
     font-size: 1.25rem;
 }
@@ -39,11 +39,6 @@ main {
     padding: .5rem;
     box-sizing: border-box;
     align-self: flex-start;
-}
-
-.current_date {
-    font-weight: bold;
-    margin-bottom: 1rem;
 }
 
 form {
@@ -88,7 +83,7 @@ table {
 tr th,
 tr td {
     color: #212121;
-    padding: .4rem;
+    padding: .3rem;
     border: 2px solid #666666;
 }
 
@@ -98,16 +93,19 @@ tr th {
     border: 2px solid #666666;
 }
 
-tr:nth-child(odd) {
+tr:nth-child(even) {
     background-color: #C0C0C0;
 }
 
-/*
-tbody tr:first-child {
-    color: #CC0000;
-    background-color: yellow;
+.today {
+    width: 100%;
+    max-width: 300px;
 }
-*/
+
+.today__text {
+    font-weight: bold;
+}
+
 
 .links {
     display: flex;

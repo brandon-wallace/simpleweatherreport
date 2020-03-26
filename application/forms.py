@@ -7,4 +7,4 @@ class AddressForm(FlaskForm):
     '''Address form'''
 
     address = StringField('Address', validators=[InputRequired()])
-    submit = SubmitField('get location')
+    submit = SubmitField('get weather')

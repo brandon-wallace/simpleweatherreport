@@ -8,29 +8,67 @@
 
   <header>
 
-    <h1 class="header1">SIMPLE WEATHER REPORT</h1>
+    <div class="header__title">
+      <h1 class="header__text">SIMPLE WEATHER REPORT</h1>
+    </div>
   
     <form action="{{ url_for('get_local_weather') }}" method="POST">
   
       {{ form.csrf_token }}
-      {{ form.address(class_='form__address', placeholder='Enter Location') }}
+      {{ form.address(class_='form__address', placeholder='Enter Location or Zip Code') }}
       {{ form.submit(class_='form__btn') }}
   
     </form>
+
+  </header>
   
-    <p class="current_date">{{ date_time }}</p>
-    <p>{{ message if message }}</p>
-    <p class="status"></p>
-    <p class="location"></p>
+  <table class="today">
+
+    <tbody>
+      <tr>
+        <td><p class="today__text">{{ date_time if date_time }}<p></td>
+      </tr>
+    </tbody>
+
+  </table>
+
+  <h4>Current Conditions:</h4>
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>temperature</th>
+        <th>forecast</th>
+        <th>low</th>
+        <th>high</th>
+        <th>sunrise</th>
+        <th>sunset</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_temp, current_temp_c) if current_temp }}</td>
+        <td>{{ current_forecast if current_forecast }}</td>
+        <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_low, current_low_c) if current_low }}</td>
+        <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_high, current_high_c) if current_high }}</td>
+        <td>{{ sunrise if sunrise }}</td>
+        <td>{{ sunset if sunset }}</td>
+      </tr>
+    </tbody>
+
+  </table>
   
+  <h4>Hourly:</h4>
+
     <table>
 
       <thead>
 
         <tr>
-          <th>hourly</th>
-          <th>fahrenheit</th>
-          <th>celcius</th>
+          <th>hour</th>
+          <th>temperature F/C</th>
           <th>forecast</th>
           <th>humidity</th>
           <th>wind_mph</th>
@@ -46,13 +84,8 @@
 
         {% for num in range(12) %}
           <tr>
-            {% if num == 0 %}
-              <td>NOW*</td>
-            {% else %}
-              <td>{{ '{}h'.format(hours[num]) if hours }}</td>
-            {% endif %}
-            <td>{{ '{:.2f}F'.format(temps[num]) if temps }}&#176;</td>
-            <td>{{ '{:.2f}C'.format(temps_celcius[num]) if temps_celcius }}&#176;</td>
+            <td>{{ '{}h'.format(hours[num]) if hours }}</td>
+            <td>{{ '{:.2f}F°/{:.1f}C°'.format(temps[num], temps_celcius[num]) if temps }}</td>
             <td>{{ forecast[num] if forecast }}</td>
             <td>{{ humidity[num] if humidity }}</td>
             <td>{{ '{:.2f}'.format(wind_speed[num]) if wind_speed }}</td>
@@ -64,6 +97,27 @@
         {% endfor %}
 
       </tbody>
+
+    </table>
+
+    <h4>Location:</h4>
+
+    <table>
+
+      <tr>
+        <td><p>timezone: {{ timezone if timezone }}</p></td>
+      <tr>
+      <tr>
+        <td><p>address: {{ local_address if local_address }}</p></td>
+      <tr>
+      <td>
+        <p class="latitude">latitude: {{ lat if lat }}</p>
+      </td>
+      <tr>
+        <td>
+          <p class="longitude">longitude: {{ lon if lon }}</p>
+        </td>
+      </tr>
 
     </table>
 

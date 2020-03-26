@@ -42,14 +42,15 @@ def get_local_weather():
     '''Display local weather report based of geolocation'''
 
     form = AddressForm()
-    address = request.form['address']
+    addr = request.form['address']
     geolocator = Nominatim(user_agent='application', timeout=3)
-    location = geolocator.geocode(address)
+    location = geolocator.geocode(addr)
     if location is None:
         return render_template('index.html', message='Location not found')
     else:
         lat = location.latitude
         lon = location.longitude
+        local_address = location.address
         url = requests.get('https://api.darksky.net/forecast/{}/{},{}'.format(api_key, lat, lon))
         # if url.response == 200:
         report = url.text
@@ -67,6 +68,17 @@ def get_local_weather():
         ozone = []
         date_time = datetime.now().strftime('%c')
 
+        current_temp = data['currently']['temperature']
+        current_temp_c = (current_temp - 32) * 5.0 / 9.0
+        current_forecast = data['currently']['summary']
+        timezone = data['timezone']
+        current_low = data['daily']['data'][0]['temperatureMin']
+        current_low_c = (current_low - 32) * 5.0 / 9.0
+        current_high = data['daily']['data'][0]['temperatureMax']
+        current_high_c = (current_high - 32) * 5.0 / 9.0
+        sunrise = datetime.fromtimestamp(data['daily']['data'][0]['sunriseTime']).strftime('%Hh:%Mm')
+        sunset = datetime.fromtimestamp(data['daily']['data'][0]['sunsetTime']).strftime('%Hh:%Mm')
+
         for txt in data['hourly']['data']:
             hours.append(datetime.fromtimestamp(txt['time']).strftime("%H"))
             temps.append(txt['temperature'])
@@ -80,6 +92,19 @@ def get_local_weather():
             pressure.append(txt['pressure'])
 
             content = {
+                    'sunrise': sunrise,
+                    'sunset': sunset,
+                    'local_address': local_address,
+                    'lat': lat,
+                    'lon': lon,
+                    'current_temp': current_temp,
+                    'current_temp_c': current_temp_c,
+                    'current_forecast': current_forecast,
+                    'timezone': timezone,
+                    'current_low': current_low,
+                    'current_low_c': current_low_c,
+                    'current_high': current_high,
+                    'current_high_c': current_high_c,
                     'date_time': date_time,
                     'hours': hours,
                     'temps': temps,
@@ -93,4 +118,4 @@ def get_local_weather():
                     'pressure': pressure
                     }
         # return redirect(url_for('index'))
-    return render_template('weather.html', lon=lon, lat=lat, form=form, **content)
+    return render_template('weather.html', form=form, **content)
