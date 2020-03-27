@@ -9,13 +9,15 @@
   <header>
 
     <div class="header__title">
-      <h1 class="header__text">SIMPLE WEATHER REPORT</h1>
+
+      <h1 class="header__text">YOUR WEATHER</h1>
+
     </div>
   
     <form action="{{ url_for('get_local_weather') }}" method="POST">
   
       {{ form.csrf_token }}
-      {{ form.address(class_='form__address', placeholder='Enter Location or Zip Code') }}
+      {{ form.address(class_='form__address', placeholder='Enter Location') }}
       {{ form.submit(class_='form__btn') }}
   
     </form>
@@ -26,7 +28,7 @@
 
     <tbody>
       <tr>
-        <td><p class="today__text">{{ date_time if date_time }}<p></td>
+        <td class="today__text">{{ date_time if date_time }}</td>
       </tr>
     </tbody>
 
@@ -34,16 +36,16 @@
 
   <h4>Current Conditions:</h4>
 
-  <table>
+  <table class="current-conditions-table">
 
     <thead>
       <tr>
-        <th>temperature</th>
-        <th>forecast</th>
-        <th>low</th>
-        <th>high</th>
-        <th>sunrise</th>
-        <th>sunset</th>
+        <th>Temperature</th>
+        <th>Forecast</th>
+        <th>Low</th>
+        <th>High</th>
+        <th>Sunrise</th>
+        <th>Sunset</th>
       </tr>
     </thead>
 
@@ -62,20 +64,20 @@
   
   <h4>Hourly:</h4>
 
-    <table>
+    <table class="hourly-table">
 
       <thead>
 
         <tr>
-          <th>hour</th>
-          <th>temperature F/C</th>
-          <th>forecast</th>
-          <th>humidity</th>
-          <th>wind_mph</th>
-          <th>uv_index</th>
-          <th>ozone</th>
-          <th>visibility</th>
-          <th>pressure</th>
+          <th>Hour</th>
+          <th>Temperature F/C</th>
+          <th>Forecast</th>
+          <th>Humidity</th>
+          <th>Wind_MPH</th>
+          <th>UV_Index</th>
+          <th>Ozone</th>
+          <th>Visibility</th>
+          <th>Pressure</th>
         </tr>
 
       </thead>
@@ -102,21 +104,22 @@
 
     <h4>Location:</h4>
 
-    <table>
+    <table class="location-table">
 
       <tr>
-        <td><p>timezone: {{ timezone if timezone }}</p></td>
+        <td>Timezone: {{ timezone if timezone }}</td>
+      </tr>
+
       <tr>
+        <td>Address: {{ local_address if local_address }}</td>
+      </tr>
+
       <tr>
-        <td><p>address: {{ local_address if local_address }}</p></td>
+        <td>Latitude: {{ lat if lat }}</td>
+      </tr>
+
       <tr>
-      <td>
-        <p class="latitude">latitude: {{ lat if lat }}</p>
-      </td>
-      <tr>
-        <td>
-          <p class="longitude">longitude: {{ lon if lon }}</p>
-        </td>
+        <td>Longitude: {{ lon if lon }}</td>
       </tr>
 
     </table>
@@ -126,8 +129,10 @@
   <footer>
 
     <div class="links">
-      <p class="link__item">powered by: <a href="https://darksky.net/poweredby/">darksky.net</a></p>
-      <p class="link__item">created by: <a href="https://github.com/brandon-wallace">brandon_wallace</a></p>
+
+      <p class="link__item">Powered by: <a href="https://darksky.net/poweredby/">darksky.net</a></p>
+      <p class="link__item">Created by: <a href="https://github.com/brandon-wallace">brandon_wallace</a></p>
+
     </div>
 
   </footer>

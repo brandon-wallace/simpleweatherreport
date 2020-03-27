@@ -9,105 +9,30 @@
     <header>
 
       <div class="header__title">
-        <h1 class="header__text">SIMPLE WEATHER REPORT</h1>
+
+        <h1 class="header__text">YOUR WEATHER</h1>
+
       </div>
     
       <form action="{{ url_for('get_local_weather') }}" method="POST">
+
         {{ form.csrf_token }}
-        {{ form.address(class_='form__address', placeholder='Enter Location or Zip Code') }}
+        {{ form.address(class_='form__address', placeholder='Enter Location') }}
         {{ form.submit(class_='form__btn') }}
+
       </form>
 
     </header>
 
-    {# 
-    <h4>Current Conditions:</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>temperature</th>
-          <th>forecast</th>
-          <th>low</th>
-          <th>high</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{ '{:.2f}F°/{:.2f}C°'.format(current_temp, current_temp_c) if current_temp }}</td>
-          <td>{{ current_forecast if current_forecast }}</td>
-          <td>{{ '{:.2f}F°'.format(current_low) if current_low }}</td>
-          <td>{{ '{:.2f}F°'.format(current_high) if current_high }}</td>
-        </tr>
-      </tbody>
-    </table>
-  
-  <h4>Hourly:</h4>
-    <table>
-
-      <thead>
-
-        <tr>
-          <th>hourly</th>
-          <th>temp f/c</th>
-          <th>forecast</th>
-          <th>humidity</th>
-          <th>wind_mph</th>
-          <th>uv_index</th>
-          <th>ozone</th>
-          <th>visibility</th>
-          <th>pressure</th>
-        </tr>
-
-      </thead>
-
-      <tbody>
-
-        {% for num in range(12) %}
-          <tr>
-            <td>{{ '{}h'.format(hours[num]) if hours }}</td>
-            <td>{{ '{:.2f}F° {:.2f}C°'.format(temps[num], temps_celcius[num]) if temps }}</td>
-            <td>{{ forecast[num] if forecast }}</td>
-            <td>{{ humidity[num] if humidity }}</td>
-            <td>{{ '{:.2f}'.format(wind_speed[num]) if wind_speed }}</td>
-            <td>{{ uv_index[num] if uv_index }}</td>
-            <td>{{ '{:.1f}'.format(ozone[num]) if ozone }}</td>
-            <td>{{ pressure[num] if pressuer }}</td>
-            <td>{{ visibility[num] if visibility }}</td>
-          </tr>
-        {% endfor %}
-
-      </tbody>
-
-    </table>
-
-    <table>
-      <tr>
-        <td><p class="current_date">{{ date_time }}</p></td>
-      </tr>
-      <tr>
-        <td><p>timezone:{{ timezone if timezone }}</p></td>
-      <tr>
-      <tr>
-        <td><p>location:{{ local_address if local_address }}</p></td>
-      <tr>
-      <td>
-          <p class="status">lat: {{ lat if lat }}</p>
-      </td>
-      <tr>
-        <td>
-            <p class="location">lon: {{ lon if lon }}</p>
-        </td>
-      </tr>
-    </table>
-    #}
-  
   </main>
 
   <footer>
 
     <div class="links">
-      <p class="link__item">powered by: <a href="https://darksky.net/poweredby/">darksky.net</a></p>
-      <p class="link__item">created by: <a href="https://github.com/brandon-wallace">brandon_wallace</a></p>
+
+      <p class="link__item">Powered by: <a href="https://darksky.net/poweredby/">darksky.net</a></p>
+      <p class="link__item">Created by: <a href="https://github.com/brandon-wallace">brandon_wallace</a></p>
+
     </div>
 
   </footer>

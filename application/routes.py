@@ -83,7 +83,7 @@ def get_local_weather():
             hours.append(datetime.fromtimestamp(txt['time']).strftime("%H"))
             temps.append(txt['temperature'])
             temps_celcius.append((int(txt['temperature']) - 32) * 5.0 / 9.0)
-            forecast.append(txt['summary'].lower())
+            forecast.append(txt['summary'])
             humidity.append(txt['humidity'])
             wind_speed.append(txt['windSpeed'])
             uv_index.append(txt['uvIndex'])

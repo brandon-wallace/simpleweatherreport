@@ -1,12 +1,20 @@
 <!-- application/templates/base.html -->
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="A simple weather report ad-free">
+    <meta name="author" content="brandon_wallace">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <title>simple weather report</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/sun.png') }}">
+    <title>Your Weather</title>
+
   </head>
+
   <body>
 
     {% block body %}
@@ -14,5 +22,7 @@
     {% endblock %}
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
   </body>
+
 </html>
