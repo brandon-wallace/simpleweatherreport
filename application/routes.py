@@ -14,10 +14,14 @@ lon, lat = None, None
 
 @babel.localeselector
 def get_locale():
+    '''Get locale of user'''
+
     return request.accept_languages.best_match(['en', 'de', 'fr', 'es'])
 
 
 def find_location(addr):
+    '''Get latitude/longitude'''
+
     try:
         return geolocator.geocode(addr)
     except GeocoderTimedOut as e:
@@ -117,5 +121,4 @@ def get_local_weather():
                     'visibility': visibility,
                     'pressure': pressure
                     }
-        # return redirect(url_for('index'))
     return render_template('weather.html', form=form, **content)
