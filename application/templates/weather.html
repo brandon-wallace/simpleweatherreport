@@ -24,52 +24,68 @@
 
   </header>
   
-  <table class="today">
-
-    <tbody>
-      <tr>
-        <td class="today__text">{{ date_time if date_time }}</td>
-      </tr>
-    </tbody>
-
-  </table>
+  <div class="today">
+    <p class="today__text">{{ date_time if date_time }}</p>
+  </div>
 
   <section class="conditions">
 
     <h4 class="conditions__text">Current Conditions:</h4>
 
     <table class="conditions__table">
+      <col width="150">
+      <thead>
+        <tr>
+          <th>Temperature</th>
+          <th>Forecast</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_temp, current_temp_c) if current_temp }}</td>
+          <td>{{ current_forecast if current_forecast }}</td>
+        </tr>
+      </tbody>
+    </table>
 
-    <thead>
-      <tr>
-        <th>Temperature</th>
-        <th>Forecast</th>
-        <th>Low</th>
-        <th>High</th>
-        <th>Sunrise</th>
-        <th>Sunset</th>
-      </tr>
-    </thead>
+    <table class="conditions__table">
+      <col width="150">
+      <thead>
+        <tr>
+          <th>Low</th>
+          <th>High</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_low, current_low_c) if current_low }}</td>
+          <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_high, current_high_c) if current_high }}</td>
+        </tr>
+      </tbody>
+    </table>
 
-    <tbody>
-      <tr>
-        <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_temp, current_temp_c) if current_temp }}</td>
-        <td>{{ current_forecast if current_forecast }}</td>
-        <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_low, current_low_c) if current_low }}</td>
-        <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_high, current_high_c) if current_high }}</td>
-        <td>{{ sunrise if sunrise }}</td>
-        <td>{{ sunset if sunset }}</td>
-      </tr>
-    </tbody>
-
+    <table class="conditions__table">
+      <col width="150">
+      <thead>
+        <tr>
+          <th>Sunrise</th>
+          <th>Sunset</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ sunrise if sunrise }}</td>
+          <td>{{ sunset if sunset }}</td>
+        </tr>
+      </tbody>
     </table>
   
   <h4>Hourly:</h4>
 
     <table class="hourly-table">
-
+      <col width="50">
+      <col width="170">
       <thead>
-
         <tr>
           <th>Hour</th>
           <th>Temperature</th>
@@ -81,11 +97,9 @@
           <th class="hidden">Visibility</th>
           <th class="hidden">Pressure</th>
         </tr>
-
       </thead>
 
       <tbody>
-
         {% for num in range(12) %}
           <tr>
             <td>{{ '{}h'.format(hours[num]) if hours }}</td>
@@ -99,7 +113,6 @@
             <td class="hidden">{{ visibility[num] if visibility }}</td>
           </tr>
         {% endfor %}
-
       </tbody>
 
     </table>
@@ -107,7 +120,7 @@
     <h4>Daily:</h4>
 
     <table class="daily-table">
-
+      <col width="150">
       <thead>
         <tr>
           <th>Date</th>

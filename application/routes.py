@@ -45,7 +45,7 @@ def get_local_weather():
     geolocator = Nominatim(user_agent='application', timeout=3)
     location = geolocator.geocode(addr)
     if location is None:
-        return render_template(index.html, message="Location Not Found")
+        return render_template('index.html', form=form, message="Location Not Found")
     else:
         lat = location.latitude
         lon = location.longitude
@@ -127,6 +127,4 @@ def get_local_weather():
                         'visibility': visibility,
                         'pressure': pressure
                         }
-            else:
-                content = {}
     return render_template('weather.html', form=form, **content)

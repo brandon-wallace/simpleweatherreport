@@ -93,9 +93,12 @@ form {
 
 .today {
     width: 100%;
+    padding: .15rem;
     margin: 0 auto;
     max-width: 400px;
+    box-sizing: border-box;
     background-color: var(--softer-blue, #BED9FF);
+    border: 2px solid var(--medium-blue, #0066CC);
 }
 
 .today__text {
@@ -104,24 +107,8 @@ form {
     background-color: var(--softer-blue, #BED9FF);
 }
 
-.conditions {
-    width: 100%;
-    max-width: 1200px;
-}
-
-.conditions__text {
-    margin: 0 auto;
-}
-
-.conditions__table {
-    border-style: solid;
-    margin-bottom: .5rem;
-    border-collapse: collapse;
-    background-color: var(--white, #FFFFFF);
-    border: 2px solid var(--dark-blue, #0066CC);
-}
-
 table {
+    width: 100%;
     border-style: solid;
     margin-bottom: .5rem;
     border-collapse: collapse;
@@ -142,6 +129,24 @@ tr th {
     color: var(--white, #FFFFFF);
     background-color: var(--dark-blue, #001A33);
     border: 2px solid var(--medium-blue, #0066CC);
+}
+
+.conditions {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.conditions__text {
+    margin: 0 auto;
+}
+
+.conditions__table {
+    width: 100%;
+    border-style: solid;
+    margin-bottom: .5rem;
+    border-collapse: collapse;
+    background-color: var(--white, #FFFFFF);
+    border: 2px solid var(--dark-blue, #0066CC);
 }
 
 .hourly-table tr:nth-child(even) {
@@ -187,7 +192,7 @@ footer {
         margin: 0 auto 1rem auto;
     }
     .today {
-        margin: 0 auto;
+        margin: 0 auto .5rem auto;
     }
     table {
         width: 100%;
