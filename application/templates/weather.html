@@ -72,14 +72,14 @@
 
         <tr>
           <th>Hour</th>
-          <th>Temperature F/C</th>
+          <th>Temperature</th>
           <th>Forecast</th>
-          <th>Humidity</th>
-          <th>Wind_MPH</th>
-          <th>UV_Index</th>
-          <th>Ozone</th>
-          <th>Visibility</th>
-          <th>Pressure</th>
+          <th class="hidden">Humidity</th>
+          <th class="hidden">Wind_MPH</th>
+          <th class="hidden">UV_Index</th>
+          <th class="hidden">Ozone</th>
+          <th class="hidden">Visibility</th>
+          <th class="hidden">Pressure</th>
         </tr>
 
       </thead>
@@ -91,15 +91,37 @@
             <td>{{ '{}h'.format(hours[num]) if hours }}</td>
             <td>{{ '{:.2f}F°/{:.1f}C°'.format(temps[num], temps_celcius[num]) if temps }}</td>
             <td>{{ forecast[num] if forecast }}</td>
-            <td>{{ humidity[num] if humidity }}</td>
-            <td>{{ '{:.2f}'.format(wind_speed[num]) if wind_speed }}</td>
-            <td>{{ uv_index[num] if uv_index }}</td>
-            <td>{{ '{:.1f}'.format(ozone[num]) if ozone }}</td>
-            <td>{{ pressure[num] if pressure }}</td>
-            <td>{{ visibility[num] if visibility }}</td>
+            <td class="hidden">{{ humidity[num] if humidity }}</td>
+            <td class="hidden">{{ '{:.2f}'.format(wind_speed[num]) if wind_speed }}</td>
+            <td class="hidden">{{ uv_index[num] if uv_index }}</td>
+            <td class="hidden">{{ '{:.1f}'.format(ozone[num]) if ozone }}</td>
+            <td class="hidden">{{ pressure[num] if pressure }}</td>
+            <td class="hidden">{{ visibility[num] if visibility }}</td>
           </tr>
         {% endfor %}
 
+      </tbody>
+
+    </table>
+
+    <h4>Daily:</h4>
+
+    <table class="daily-table">
+
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>High/Low</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for i in range(7) %}
+          <tr>
+            <td>{{ daily_datetime[i] if daily_datetime }}</td>
+            <td>{{ '{:.2f}/{:.2f}'.format(daily_high[i], daily_low[i]) if daily_high }}</td>
+          </tr>
+        {% endfor %}
       </tbody>
 
     </table>
@@ -113,7 +135,7 @@
       </tr>
 
       <tr>
-        <td>Address: {{ local_address if local_address }}</td>
+        <td>Location: {{ local_address if local_address }}</td>
       </tr>
 
       <tr>
