@@ -110,7 +110,7 @@ form {
 .today {
     width: 100%;
     padding: .15rem;
-    margin: 0 auto;
+    margin: 0 auto .5rem auto;
     max-width: 400px;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
@@ -215,9 +215,6 @@ footer {
     form, 
     .header__title {
         margin: 0 auto 1rem auto;
-    }
-    .today {
-        margin: 0 auto .5rem auto;
     }
     table {
         width: 100%;
