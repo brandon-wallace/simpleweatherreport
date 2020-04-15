@@ -96,7 +96,7 @@ def get_local_weather():
             for i in range(7):
                 daily_high.append(data['daily']['data'][i]['temperatureHigh'])
                 daily_low.append(data['daily']['data'][i]['temperatureLow'])
-                daily_datetime.append(datetime.fromtimestamp(data['daily']['data'][i]['time']).strftime('%b %d'))
+                daily_datetime.append(datetime.fromtimestamp(data['daily']['data'][i]['time']).strftime('%a %b %d'))
 
                 content = {
                         'daily_high': daily_high,
