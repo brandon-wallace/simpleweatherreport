@@ -1,26 +1,17 @@
-console.log(`Javascript enabled`);
+// Display a loading icon while API query takes place.
 
-/*
-(function getLocation() {
-    const geoLocation = document.querySelector('.location');
-    const status = document.querySelector('.status');
-    
-    const success = (position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        status.textContent = '';
-        geoLocation.textContent = `lat: ${lat}° lon: ${lon}°`;
-    }
-    
-    const error = () => {
-        status.textContent = 'Unable to get location';
-    }
-    
-    if (!navigator.geolocation) {
-        status.textContent = 'Geolocation not supported.';
-    } else {
-        status.textContent = 'Locating...';
-        navigator.geolocation.getCurrentPosition(success, error);
-    }
-})();
-*/
+
+window.addEventListener('pageshow', () => {
+    document.querySelector('.dots').style.display = 'none';
+});
+
+
+const form = document.querySelector('form');
+
+
+const revealLoader = () => {
+    document.querySelector('.dots').style.display = 'block';
+}
+
+
+form.addEventListener('submit', revealLoader);

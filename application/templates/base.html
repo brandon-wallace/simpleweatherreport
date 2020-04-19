@@ -17,11 +17,13 @@
 
   <body>
 
+    <noscript>
+      <p style="color:#FC0000;text-align:center">Please enable Javascript</p>
+    </noscript>
+
     {% block body %}
 
     {% endblock %}
-
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
   </body>
 
