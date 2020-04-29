@@ -22,6 +22,7 @@ def find_location(addr):
     '''Get latitude and longitude'''
 
     try:
+        geolocator = Nominatim(user_agent='application', timeout=3)
         return geolocator.geocode(addr)
     except (GeocoderTimedOut, GeocoderServiceError) as e:
         print(e)
@@ -42,8 +43,7 @@ def get_local_weather():
 
     form = AddressForm()
     addr = request.form['address']
-    geolocator = Nominatim(user_agent='application', timeout=3)
-    location = geolocator.geocode(addr)
+    location = find_location(addr)
     if location is None:
         return render_template('index.html', form=form, message="Location Not Found")
     else:
