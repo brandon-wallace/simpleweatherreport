@@ -50,14 +50,14 @@
     <table class="conditions__table">
       <thead>
         <tr>
-          <th style="width:150px">Low</th>
-          <th>High</th>
+          <th style="width:150px">High</th>
+          <th>Low</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_low, current_low_c) if current_low }}</td>
           <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_high, current_high_c) if current_high }}</td>
+          <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_low, current_low_c) if current_low }}</td>
         </tr>
       </tbody>
     </table>
@@ -83,7 +83,7 @@
       <thead>
         <tr>
           <th style="width:50px">Hour</th>
-          <th style="width:170px">Temperature</th>
+          <th style="width:170px">Temperature F/C</th>
           <th>Forecast</th>
           <th class="hidden">Humidity</th>
           <th class="hidden">Wind_MPH</th>
