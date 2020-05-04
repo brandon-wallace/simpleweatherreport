@@ -1,4 +1,5 @@
 import json
+import pytz
 import requests
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut, GeocoderServiceError
@@ -70,13 +71,13 @@ def get_local_weather():
             current_temp = data['currently']['temperature']
             current_temp_c = (current_temp - 32) * 5.0 / 9.0
             current_forecast = data['currently']['summary']
-            timezone = data['timezone']
+            tzone = data['timezone']
             current_low = data['daily']['data'][0]['temperatureLow']
             current_low_c = (current_low - 32) * 5.0 / 9.0
             current_high = data['daily']['data'][0]['temperatureHigh']
             current_high_c = (current_high - 32) * 5.0 / 9.0
-            sunrise = datetime.fromtimestamp(data['daily']['data'][0]['sunriseTime']).strftime('%Hh:%Mm')
-            sunset = datetime.fromtimestamp(data['daily']['data'][0]['sunsetTime']).strftime('%Hh:%Mm')
+            sunrise = datetime.fromtimestamp(data['daily']['data'][0]['sunriseTime'], tz=pytz.timezone(tzone)).strftime('%Hh:%Mm')
+            sunset = datetime.fromtimestamp(data['daily']['data'][0]['sunsetTime'], tz=pytz.timezone(tzone)).strftime('%Hh:%Mm')
 
             for txt in data['hourly']['data']:
                 hours.append(datetime.fromtimestamp(txt['time']).strftime("%H"))
@@ -110,7 +111,7 @@ def get_local_weather():
                         'current_temp': current_temp,
                         'current_temp_c': current_temp_c,
                         'current_forecast': current_forecast,
-                        'timezone': timezone,
+                        'timezone': tzone,
                         'current_low': current_low,
                         'current_low_c': current_low_c,
                         'current_high': current_high,

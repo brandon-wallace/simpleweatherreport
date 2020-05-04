@@ -12,6 +12,7 @@ python-dotenv = "*"
 flask-babel = "*"
 requests = "*"
 gunicorn = "*"
+pytz = "*"
 
 [dev-packages]
 
