@@ -66,7 +66,6 @@ def get_local_weather():
             pressure = []
             uv_index = []
             ozone = []
-            date_time = datetime.now().strftime('%c')
 
             current_temp = data['currently']['temperature']
             current_temp_c = (current_temp - 32) * 5.0 / 9.0
@@ -116,7 +115,6 @@ def get_local_weather():
                         'current_low_c': current_low_c,
                         'current_high': current_high,
                         'current_high_c': current_high_c,
-                        'date_time': date_time,
                         'hours': hours,
                         'temps': temps,
                         'temps_celcius': temps_celcius,
