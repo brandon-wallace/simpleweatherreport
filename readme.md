@@ -1,7 +1,7 @@
 # A weather report application build with Python, Flask, and Geopy.
 
-![screenshot_mobile](application/static/images/screenshot_mobile.jpg)
-![screenshot](application/static/images/screenshot.jpg)
+![screenshot_mobile](application/static/images/screenshot_mobile.png)
+![screenshot](application/static/images/screenshot.png)
 
 # Requirements
 ```
