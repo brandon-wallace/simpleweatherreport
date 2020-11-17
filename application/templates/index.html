@@ -17,7 +17,7 @@
       <form action="{{ url_for('get_local_weather') }}" method="POST">
 
         {{ form.csrf_token }}
-        {{ form.address(class_='form__address', placeholder='Enter Location') }}
+        {{ form.address(class_='form__address', placeholder='Enter Location', autofocus=true) }}
         {{ form.submit(class_='form__btn') }}
 
       </form>
@@ -40,8 +40,8 @@
 
     <div class="links">
 
-      <p class="link__item">Powered by: <a href="https://darksky.net/poweredby/">darksky.net</a></p>
-      <p class="link__item">Created by: <a href="https://github.com/brandon-wallace">brandon_wallace</a></p>
+      <p class="link__item">Powered by: <a href="https://openweathermap.org/">https://openweathermap.org/</a></p>
+      <p class="link__item">Created by: <a href="https://brandonwallace.cc">brandon_wallace</a></p>
 
     </div>
 

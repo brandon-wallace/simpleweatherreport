@@ -25,8 +25,7 @@ def find_location(addr):
     try:
         geolocator = Nominatim(user_agent='application', timeout=3)
         return geolocator.geocode(addr)
-    except (GeocoderTimedOut, GeocoderServiceError) as e:
-        print(e)
+    except (GeocoderTimedOut, GeocoderServiceError):
         return
 
 
@@ -51,7 +50,8 @@ def get_local_weather():
         lat = location.latitude
         lon = location.longitude
         local_address = location.address
-        url = requests.get('https://api.darksky.net/forecast/{}/{},{}'.format(api_key, lat, lon))
+        url = requests.get('https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&appid={}'.format(lat, lon, api_key))
+
         if url.status_code == 200:
             report = url.text
             data = json.loads(report)
@@ -67,26 +67,24 @@ def get_local_weather():
             uv_index = []
             ozone = []
 
-            current_temp = data['currently']['temperature']
+            current_temp = data['current']['temp']
             current_temp_c = (current_temp - 32) * 5.0 / 9.0
-            current_forecast = data['currently']['summary']
+            current_forecast = data['current']['weather'][0]['description']
             tzone = data['timezone']
-            current_low = data['daily']['data'][0]['temperatureLow']
+            current_low = data['daily'][0]['temp']['min']
             current_low_c = (current_low - 32) * 5.0 / 9.0
-            current_high = data['daily']['data'][0]['temperatureHigh']
+            current_high = data['daily'][0]['temp']['max']
             current_high_c = (current_high - 32) * 5.0 / 9.0
-            sunrise = datetime.fromtimestamp(data['daily']['data'][0]['sunriseTime'], tz=pytz.timezone(tzone)).strftime('%Hh:%Mm')
-            sunset = datetime.fromtimestamp(data['daily']['data'][0]['sunsetTime'], tz=pytz.timezone(tzone)).strftime('%Hh:%Mm')
+            sunrise = datetime.fromtimestamp(data['daily'][0]['sunrise'], tz=pytz.timezone(tzone)).strftime('%Hh:%Mm')
+            sunset = datetime.fromtimestamp(data['daily'][0]['sunset'], tz=pytz.timezone(tzone)).strftime('%Hh:%Mm')
 
-            for txt in data['hourly']['data']:
-                hours.append(datetime.fromtimestamp(txt['time']).strftime("%H"))
-                temps.append(txt['temperature'])
-                temps_celcius.append((int(txt['temperature']) - 32) * 5.0 / 9.0)
-                forecast.append(txt['summary'])
+            for txt in data['hourly']:
+                hours.append(datetime.fromtimestamp(txt['dt']).strftime("%H"))
+                temps.append(txt['temp'])
+                temps_celcius.append((int(txt['temp']) - 32) * 5.0 / 9.0)
+                forecast.append(txt['weather'][0]['description'])
                 humidity.append(txt['humidity'])
-                wind_speed.append(txt['windSpeed'])
-                uv_index.append(txt['uvIndex'])
-                ozone.append(txt['ozone'])
+                wind_speed.append(txt['wind_speed'])
                 visibility.append(txt['visibility'])
                 pressure.append(txt['pressure'])
 
@@ -94,9 +92,9 @@ def get_local_weather():
             daily_low = []
             daily_datetime = []
             for i in range(7):
-                daily_high.append(data['daily']['data'][i]['temperatureHigh'])
-                daily_low.append(data['daily']['data'][i]['temperatureLow'])
-                daily_datetime.append(datetime.fromtimestamp(data['daily']['data'][i]['time']).strftime('%a %b %d'))
+                daily_high.append(data['daily'][i]['temp']['max'])
+                daily_low.append(data['daily'][i]['temp']['min'])
+                daily_datetime.append(datetime.fromtimestamp(data['daily'][i]['dt']).strftime('%a %b %d'))
 
                 content = {
                         'daily_high': daily_high,
@@ -121,8 +119,6 @@ def get_local_weather():
                         'forecast': forecast,
                         'humidity': humidity,
                         'wind_speed': wind_speed,
-                        'uv_index': uv_index,
-                        'ozone': ozone,
                         'visibility': visibility,
                         'pressure': pressure
                         }

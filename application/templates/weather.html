@@ -87,8 +87,6 @@
           <th>Forecast</th>
           <th class="hidden">Humidity</th>
           <th class="hidden">Wind_MPH</th>
-          <th class="hidden">UV_Index</th>
-          <th class="hidden">Ozone</th>
           <th class="hidden">Visibility</th>
           <th class="hidden">Pressure</th>
         </tr>
@@ -102,8 +100,6 @@
             <td>{{ forecast[num] if forecast }}</td>
             <td class="hidden">{{ humidity[num] if humidity }}</td>
             <td class="hidden">{{ '{:.2f}'.format(wind_speed[num]) if wind_speed }}</td>
-            <td class="hidden">{{ uv_index[num] if uv_index }}</td>
-            <td class="hidden">{{ '{:.1f}'.format(ozone[num]) if ozone }}</td>
             <td class="hidden">{{ pressure[num] if pressure }}</td>
             <td class="hidden">{{ visibility[num] if visibility }}</td>
           </tr>
