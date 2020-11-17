@@ -33,54 +33,77 @@
     <h4 class="conditions__text">Current Conditions:</h4>
 
     <table class="conditions__table">
+
       <thead>
+
         <tr>
           <th style="width:150px">Temperature</th>
           <th>Forecast</th>
         </tr>
+
       </thead>
+
       <tbody>
+
         <tr>
           <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_temp, current_temp_c) if current_temp }}</td>
           <td>{{ current_forecast if current_forecast }}</td>
         </tr>
+
       </tbody>
+
     </table>
 
     <table class="conditions__table">
+
       <thead>
+
         <tr>
           <th style="width:150px">High</th>
           <th>Low</th>
         </tr>
+
       </thead>
+
       <tbody>
+
         <tr>
           <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_high, current_high_c) if current_high }}</td>
           <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_low, current_low_c) if current_low }}</td>
         </tr>
+
       </tbody>
+
     </table>
 
     <table class="conditions__table">
+
       <thead>
+
         <tr>
           <th style="width:150px">Sunrise</th>
           <th>Sunset</th>
         </tr>
+
       </thead>
+
       <tbody>
+
         <tr>
           <td>{{ sunrise if sunrise }}</td>
           <td>{{ sunset if sunset }}</td>
         </tr>
+
       </tbody>
+
     </table>
   
   <h4>Hourly:</h4>
 
     <table class="hourly-table">
+
       <thead>
+
         <tr>
           <th style="width:50px">Hour</th>
           <th style="width:170px">Temperature F/C</th>
@@ -90,10 +113,13 @@
           <th class="hidden">Visibility</th>
           <th class="hidden">Pressure</th>
         </tr>
+
       </thead>
 
       <tbody>
+
         {% for num in range(12) %}
+
           <tr>
             <td>{{ '{}h'.format(hours[num]) if hours }}</td>
             <td>{{ '{:.2f}F°/{:.1f}C°'.format(temps[num], temps_celcius[num]) if temps }}</td>
@@ -103,7 +129,9 @@
             <td class="hidden">{{ pressure[num] if pressure }}</td>
             <td class="hidden">{{ visibility[num] if visibility }}</td>
           </tr>
+
         {% endfor %}
+
       </tbody>
 
     </table>
@@ -111,20 +139,27 @@
     <h4>Daily:</h4>
 
     <table class="daily-table">
+
       <thead>
+
         <tr>
           <th style="width:125px">Date</th>
           <th>High/Low</th>
         </tr>
+
       </thead>
 
       <tbody>
+
         {% for i in range(7) %}
+
           <tr>
             <td>{{ daily_datetime[i] if daily_datetime }}</td>
             <td>{{ '{:.2f}F°/{:.2f}F°'.format(daily_high[i], daily_low[i]) if daily_high }}</td>
           </tr>
+
         {% endfor %}
+
       </tbody>
 
     </table>
@@ -159,8 +194,8 @@
 
     <div class="links">
 
-      <p class="link__item">Powered by: <a href="https://darksky.net/poweredby/">darksky.net</a></p>
-      <p class="link__item">Created by: <a href="https://github.com/brandon-wallace">brandon_wallace</a></p>
+      <p class="link__item">Powered by: <a href="https://openweathermap.org/" target="_blank">OpenWeather API</a></p>
+      <p class="link__item">Created by: <a href="https://brandonwallace.cc/" target="_blank">Brandon_Wallace</a></p>
 
     </div>
 
