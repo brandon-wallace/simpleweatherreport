@@ -39,10 +39,11 @@ def index():
     return render_template('index.html', form=form)
 
 
-@app.route('/weather', methods=['GET', 'POST'])
+@app.route('/weather', methods=['POST'])
 def get_weather_report():
     '''Display local weather report based on geolocation'''
 
+    content = {}
     form = AddressForm()
     addr = request.form.get('address')
     location = find_location(addr)
