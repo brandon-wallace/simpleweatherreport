@@ -34,10 +34,12 @@ def index():
     '''Index route'''
 
     form = AddressForm()
+    if form.validate_on_submit():
+        return redirect(url_for('get_weather_report'))
     return render_template('index.html', form=form)
 
 
-@app.route('/weather', methods=['POST'])
+@app.route('/weather', methods=['GET', 'POST'])
 def get_weather_report():
     '''Display local weather report based on geolocation'''
 
