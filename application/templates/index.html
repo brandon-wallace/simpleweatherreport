@@ -14,7 +14,7 @@
 
       </div>
     
-      <form action="{{ url_for('get_local_weather') }}" method="POST">
+      <form action="{{ url_for('get_weather_report') }}" method="POST">
 
         {{ form.csrf_token }}
         {{ form.address(class_='form__address', placeholder='Enter Location', autofocus=true) }}

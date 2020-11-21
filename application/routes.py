@@ -38,19 +38,21 @@ def index():
 
 
 @app.route('/weather', methods=['POST'])
-def get_local_weather():
+def get_weather_report():
     '''Display local weather report based on geolocation'''
 
     form = AddressForm()
-    addr = request.form['address']
+    addr = request.form.get('address')
     location = find_location(addr)
+
     if location is None:
         return render_template('index.html', form=form, message="Location Not Found")
+
     else:
         lat = location.latitude
         lon = location.longitude
         local_address = location.address
-        url = requests.get('https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&appid={}'.format(lat, lon, api_key))
+        url = requests.get('https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&appid={}&units=imperial'.format(lat, lon, api_key))
 
         if url.status_code == 200:
             report = url.text
@@ -64,8 +66,9 @@ def get_local_weather():
             wind_speed = []
             visibility = []
             pressure = []
-            uv_index = []
-            ozone = []
+            daily_high = []
+            daily_low = []
+            daily_datetime = []
 
             current_temp = data['current']['temp']
             current_temp_c = (current_temp - 32) * 5.0 / 9.0
@@ -88,38 +91,35 @@ def get_local_weather():
                 visibility.append(txt['visibility'])
                 pressure.append(txt['pressure'])
 
-            daily_high = []
-            daily_low = []
-            daily_datetime = []
             for i in range(7):
                 daily_high.append(data['daily'][i]['temp']['max'])
                 daily_low.append(data['daily'][i]['temp']['min'])
                 daily_datetime.append(datetime.fromtimestamp(data['daily'][i]['dt']).strftime('%a %b %d'))
 
                 content = {
-                        'daily_high': daily_high,
-                        'daily_low': daily_low,
-                        'daily_datetime': daily_datetime,
-                        'sunrise': sunrise,
-                        'sunset': sunset,
-                        'local_address': local_address,
-                        'lat': lat,
-                        'lon': lon,
-                        'current_temp': current_temp,
-                        'current_temp_c': current_temp_c,
-                        'current_forecast': current_forecast,
-                        'timezone': tzone,
-                        'current_low': current_low,
-                        'current_low_c': current_low_c,
-                        'current_high': current_high,
-                        'current_high_c': current_high_c,
-                        'hours': hours,
-                        'temps': temps,
-                        'temps_celcius': temps_celcius,
-                        'forecast': forecast,
-                        'humidity': humidity,
-                        'wind_speed': wind_speed,
-                        'visibility': visibility,
-                        'pressure': pressure
-                        }
+                    'daily_high': daily_high,
+                    'daily_low': daily_low,
+                    'daily_datetime': daily_datetime,
+                    'sunrise': sunrise,
+                    'sunset': sunset,
+                    'local_address': local_address,
+                    'lat': lat,
+                    'lon': lon,
+                    'current_temp': current_temp,
+                    'current_temp_c': current_temp_c,
+                    'current_forecast': current_forecast,
+                    'timezone': tzone,
+                    'current_low': current_low,
+                    'current_low_c': current_low_c,
+                    'current_high': current_high,
+                    'current_high_c': current_high_c,
+                    'hours': hours,
+                    'temps': temps,
+                    'temps_celcius': temps_celcius,
+                    'forecast': forecast,
+                    'humidity': humidity,
+                    'wind_speed': wind_speed,
+                    'visibility': visibility,
+                    'pressure': pressure
+                    }
     return render_template('weather.html', form=form, **content)
