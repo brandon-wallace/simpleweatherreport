@@ -71,6 +71,17 @@ main {
     letter-spacing: 2px;
 }
 
+.header__icons {
+    margin: 0 auto 12px auto;
+    max-width: 600px;
+    text-align: center;
+}
+
+.fas,
+.far {
+    font-size: 2.5rem;
+}
+
 form {
     width: 100%;
     display: -webkit-box;
@@ -273,6 +284,10 @@ footer {
 }
 
 @media only screen and (min-width: 400px) {
+    .fas,
+    .far {
+        font-size: 3.5rem;
+    }
     form, 
     .header__title {
         margin: 0 auto 1rem auto;
