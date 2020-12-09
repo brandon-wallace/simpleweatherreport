@@ -23,10 +23,10 @@ def find_location(addr):
     '''Get latitude and longitude'''
 
     try:
-        geolocator = Nominatim(user_agent='application', timeout=3)
+        geolocator = Nominatim(user_agent='yourweather.cc', timeout=3)
         return geolocator.geocode(addr)
     except (GeocoderTimedOut, GeocoderServiceError):
-        return
+        return None
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -49,8 +49,8 @@ def get_weather_report():
     location = find_location(addr)
 
     if location is None:
-        return render_template('index.html', form=form, message="Location Not Found")
-
+        return render_template('index.html', form=form,
+                               message="Location Not Found")
     else:
         lat = location.latitude
         lon = location.longitude
@@ -81,8 +81,12 @@ def get_weather_report():
             current_low_c = (current_low - 32) * 5.0 / 9.0
             current_high = data['daily'][0]['temp']['max']
             current_high_c = (current_high - 32) * 5.0 / 9.0
-            sunrise = datetime.fromtimestamp(data['daily'][0]['sunrise'], tz=pytz.timezone(tzone)).strftime('%Hh:%Mm')
-            sunset = datetime.fromtimestamp(data['daily'][0]['sunset'], tz=pytz.timezone(tzone)).strftime('%Hh:%Mm')
+            sunrise = datetime.fromtimestamp(data['daily'][0]['sunrise'],
+                                             tz=pytz.timezone(
+                                             tzone)).strftime('%Hh:%Mm')
+            sunset = datetime.fromtimestamp(data['daily'][0]['sunset'],
+                                            tz=pytz.timezone(
+                                            tzone)).strftime('%Hh:%Mm')
 
             for txt in data['hourly']:
                 hours.append(datetime.fromtimestamp(txt['dt']).strftime("%H"))
@@ -97,7 +101,9 @@ def get_weather_report():
             for i in range(7):
                 daily_high.append(data['daily'][i]['temp']['max'])
                 daily_low.append(data['daily'][i]['temp']['min'])
-                daily_datetime.append(datetime.fromtimestamp(data['daily'][i]['dt']).strftime('%a %b %d'))
+                daily_datetime.append(datetime.fromtimestamp(
+                                      data['daily'][i]['dt']).strftime(
+                                      '%a %b %d'))
 
                 content = {
                     'daily_high': daily_high,

@@ -4,36 +4,36 @@
 
 {% block body %}
 
+  <header>
+
+    <div class="header__title">
+
+      <h1 class="header__text">YOUR WEATHER</h1>
+
+    </div>
+  
+    <form action="{{ url_for('index') }}" method="POST">
+
+      {{ form.csrf_token }}
+      {{ form.address(class_='form__address', placeholder='Enter Location', autofocus=true) }}
+      {{ form.submit(class_='form__btn') }}
+
+    </form>
+
+    <p class="message">{{ message if message }}</p>
+
+    <div class="header__icons">
+      <i class="fas fa-temperature-high"></i>
+      <i class="far fa-snowflake"></i>
+      <i class="fas fa-bolt"></i>
+      <i class="fas fa-cloud-showers-heavy"></i>
+      <i class="fas fa-umbrella"></i>
+      <i class="fas fa-cloud-sun"></i>
+    </div>
+
+  </header>
+
   <main>
-
-    <header>
-
-      <div class="header__title">
-
-        <h1 class="header__text">YOUR WEATHER</h1>
-
-      </div>
-    
-      <form action="{{ url_for('index') }}" method="POST">
-
-        {{ form.csrf_token }}
-        {{ form.address(class_='form__address', placeholder='Enter Location', autofocus=true) }}
-        {{ form.submit(class_='form__btn') }}
-
-      </form>
-
-      <p class="message">{{ message if message }}</p>
-
-      <div class="header__icons">
-        <i class="fas fa-temperature-high"></i>
-        <i class="far fa-snowflake"></i>
-        <i class="fas fa-bolt"></i>
-        <i class="fas fa-cloud-showers-heavy"></i>
-        <i class="fas fa-umbrella"></i>
-        <i class="fas fa-cloud-sun"></i>
-      </div>
-
-    </header>
 
     <div class="dots loading">
 
