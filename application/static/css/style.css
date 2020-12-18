@@ -3,6 +3,17 @@
   src: url('../fonts/Hack-Regular.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'weathericons';
+    src: url('../fonts/weathericons-regular-webfont.eot'); 
+    src: url('../fonts/weathericons-regular-webfont.eot?#iefix') format('embedded-opentype'), 
+         url('../fonts/weathericons-regular-webfont.woff2') format('woff2'), 
+         url('../fonts/weathericons-regular-webfont.woff') format('woff'), 
+         url('../fonts/weathericons-regular-webfont.ttf')  format('truetype'), 
+         url('../fonts/weathericons-regular-webfont.svg#svgFontName') format('svg'); 
+}
+
+
 :root {
     --blue: #66B3FF;
     --white: #FFFFFF;
@@ -44,6 +55,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 main {
     width: 100%;
+    height: 100%;
     padding: .5rem;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
@@ -67,7 +79,7 @@ header {
     background-color: #BED9FF;
     background-color: var(--softer-blue, #BED9FF);
     border: 2px solid #0066CC;
-    border: 2px solid var(--medium-blue, #0066CC);
+    border: 4px solid var(--medium-blue, #0066CC);
 }
 
 .header__text {
@@ -78,6 +90,73 @@ header {
 .header__icons {
     margin: 0 auto 12px auto;
     max-width: 600px;
+    text-align: center;
+}
+
+.tile {
+    width: 100%;
+    max-width: 400px;
+    min-height: 200px;
+    margin: 0 auto .5rem auto;
+    box-sizing: border-box;
+    margin: 0 auto .5rem auto;
+    border: 4px solid var(--medium-blue, #0066CC);
+}
+
+.tile__header-2 {
+    padding: .5rem;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.tile__temperature,
+.tile__forecast,
+.tile__temp-low,
+.tile__temp-high,
+.tile__location {
+    display: block;
+    padding: .5rem;
+    font-weight: bold;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.tile__temperature {
+    margin: 0;
+    display: flex;
+}
+
+.tile__digits {
+    font-size: 4rem;
+}
+
+.tile__temp-units {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.tile__icon i {
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+    font-size: 7rem;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.tile__forecast {
+    font-size: 1.5rem;
+}
+
+.tile__temp-low,
+.tile__temp-high {
+    font-size: 1rem;
+}
+
+.tile__location {
+    padding: .5rem;
+    display: block;
+    font-size: 1rem;
     text-align: center;
 }
 
@@ -110,8 +189,8 @@ form {
     font-family: inherit;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    border: 2px solid #0066CC;
-    border: 2px solid var(--medium-blue, #0066CC);
+    border: 4px solid #0066CC;
+    border: 4px solid var(--medium-blue, #0066CC);
 }
 
 .form__btn {
@@ -126,8 +205,8 @@ form {
     color: var(--white, #FFFFFF);
     background-color: #001A33;
     background-color: var(--dark-blue, #001A33);
-    border: 2px solid #0066CC;
-    border: 2px solid var(--medium-blue, #0066CC);
+    border: 4px solid #0066CC;
+    border: 4px solid var(--medium-blue, #0066CC);
 }
 
 .today {
