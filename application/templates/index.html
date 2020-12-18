@@ -12,6 +12,20 @@
 
     </div>
   
+  </header>
+
+  <main>
+
+    <div class="tile">
+
+      <p class="tile__temperature"><span class="tile__digits">{{ '{:.1f}'.format(current_temp) if current_temp }}</span><span class="tile__temp-units">F°</span></p>
+      <span class="tile__icon"><i class="wi wi-day-sunny"></i></span>
+      <span class="tile__forecast">{{ current_forecast if current_forecast }}</span>
+      <span class="tile__temp-low">{{ 'low: {}F°'.format(current_low) if current_low }} {{ 'high: {}F°'.format(current_high) if current_high }}</span>
+      <span class="tile__location">{{ '{}, {}, {}'.format(city, region_name, country_code) }}</span>
+
+    </div>
+
     <form action="{{ url_for('index') }}" method="POST">
 
       {{ form.csrf_token }}
@@ -21,19 +35,6 @@
     </form>
 
     <p class="message">{{ message if message }}</p>
-
-    <div class="header__icons">
-      <i class="fas fa-temperature-high"></i>
-      <i class="far fa-snowflake"></i>
-      <i class="fas fa-bolt"></i>
-      <i class="fas fa-cloud-showers-heavy"></i>
-      <i class="fas fa-umbrella"></i>
-      <i class="fas fa-cloud-sun"></i>
-    </div>
-
-  </header>
-
-  <main>
 
     <div class="dots loading">
 

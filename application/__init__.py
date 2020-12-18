@@ -1,8 +1,6 @@
 import os
-import json
 from flask import Flask
 from flask_babel import Babel
-from datetime import datetime
 
 
 app = Flask(__name__)
@@ -21,7 +19,6 @@ def create_app():
 
     babel.init_app(app)
 
+    from application import routes
+
     return app
-
-
-from application import routes
