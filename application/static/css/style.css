@@ -87,6 +87,15 @@ header {
     letter-spacing: 2px;
 }
 
+.header__text a {
+    color: #000000;
+    text-decoration: none;
+}
+
+.header__text a:hover {
+    text-decoration: underline;
+}
+
 .header__icons {
     margin: 0 auto 12px auto;
     max-width: 600px;
@@ -124,6 +133,8 @@ header {
 .tile__temperature {
     margin: 0;
     display: flex;
+    align-items: baseline;
+    justify-content: center;
 }
 
 .tile__digits {
@@ -140,6 +151,7 @@ header {
     margin: 0 auto;
     padding: 1rem;
     font-size: 7rem;
+    min-height: 170px;
     text-align: center;
     box-sizing: border-box;
 }
@@ -356,6 +368,14 @@ footer {
 
 .dot-2 {
   animation-delay: -0.16s;
+}
+
+.anchor__link {
+    height: 40px;
+    display: block;
+    line-height: 40px;
+    text-align: center;
+    text-decoration: none;
 }
 
 @keyframes loading {

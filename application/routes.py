@@ -26,9 +26,14 @@ def get_user_location():
         ip_address = request.headers['X-Forwarded-For']
     else:
         ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+
+    if ip_address == '127.0.0.1':
+        ip_address = requests.get('http://ipecho.net/plain').text
+
     url = f'http://ip-api.com/json/{ip_address}'
     response = requests.get(url)
     text = response.json()
+
     if text['status'] == 'success':
         lat = text['lat']
         lon = text['lon']
@@ -177,3 +182,17 @@ def get_weather_report():
                     'pressure': pressure
                     }
     return render_template('weather.html', form=form, **content)
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    '''404 page not found route'''
+
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    '''500 page not found route'''
+
+    return render_template('500.html'), 500

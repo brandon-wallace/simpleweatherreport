@@ -1,0 +1,44 @@
+{# application/templates/500.html #}
+
+{% extends 'base.html' %}
+
+{% block body %}
+
+  <header>
+
+    <div class="header__title">
+
+      <h1 class="header__text"><a href="{{ url_for('index') }}">YOUR WEATHER</a></h1>
+
+    </div>
+  
+  </header>
+
+  <main>
+
+    <div class="tile">
+
+      <p class="tile__temperature"><span class="tile__digits">500</span><span class="tile__temp-units">F°</span></p>
+      <span class="tile__icon"><i class="wi wi-night-alt-storm-showers"></i></span>
+      <span class="tile__forecast">Internal Server Error</span>
+
+    </div>
+
+    <a class="form__btn anchor__link" href="{{ url_for('index') }}">BACK</a>
+
+  </main>
+
+  <footer>
+
+    <div class="links">
+
+      <p class="link__item">Powered by: <a href="https://openweathermap.org/" target="_blank">OpenWeather API</a></p>
+      <p class="link__item">Created by: <a href="https://brandonwallace.cc/" target="_blank">Brandon_Wallace</a></p>
+
+    </div>
+
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+{% endblock %}
