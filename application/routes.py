@@ -36,8 +36,8 @@ def get_user_location():
     if text['status'] == 'success':
         lat = text['lat']
         lon = text['lon']
-        city = text['city']
         region_name = text['regionName']
+        city = text['city']
         country = text['country']
         return lat, lon, region_name, city, country
     else:

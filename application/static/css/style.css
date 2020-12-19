@@ -57,6 +57,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 main {
     width: 100%;
+    height: 100%;
     padding: 0 .5rem 0 .5rem;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
@@ -79,7 +80,7 @@ header {
             box-sizing: border-box;
     background-color: #BED9FF;
     background-color: var(--softer-blue, #BED9FF);
-    border: 2px solid #0066CC;
+    border: 4px solid #0066CC;
     border: 4px solid var(--medium-blue, #0066CC);
 }
 
@@ -183,7 +184,7 @@ form {
     display: -ms-flexbox;
     display: flex;
     max-width: 400px;
-    margin-bottom: .5rem;
+    margin: 0 auto .5rem auto;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -396,7 +397,7 @@ footer {
         font-size: 3.5rem;
     }
     .header__title {
-        margin: .5rem auto 0 auto;
+        margin: .5rem auto .5rem auto;
     }
     table {
         width: 100%;
