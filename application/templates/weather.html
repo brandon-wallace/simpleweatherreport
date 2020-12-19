@@ -17,6 +17,16 @@
   
   <main>
 
+    <div class="tile">
+
+      <p class="tile__temperature"><span class="tile__digits">{{ '{:.1f}'.format(current_temp) if current_temp }}</span><span class="tile__temp-units">F°</span></p>
+      <span class="tile__icon"><i class="wi wi-owm-{{ icon_id if icon_id }}"></i></span>
+      <span class="tile__forecast">{{ current_forecast if current_forecast }}</span>
+      <span class="tile__temp-low">{{ 'low: {}F°'.format(current_low) if current_low }} {{ 'high: {}F°'.format(current_high) if current_high }}</span>
+      <span class="tile__location">{{ '{}'.format(local_address) if local_address }}</span>
+
+    </div>
+
     <form action="{{ url_for('get_weather_report') }}" method="POST">
   
       {{ form.csrf_token }}
@@ -33,85 +43,16 @@
 
     </div>
 
+
   <section class="conditions">
-
-    <h4 class="conditions__text">Current Conditions:</h4>
-
-    <table class="conditions__table">
-
-      <thead>
-
-        <tr>
-          <th style="width:150px">Temperature</th>
-          <th>Forecast</th>
-        </tr>
-
-      </thead>
-
-      <tbody>
-
-        <tr>
-          <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_temp, current_temp_c) if current_temp }}</td>
-          <td>{{ current_forecast if current_forecast }}</td>
-        </tr>
-
-      </tbody>
-
-    </table>
-
-    <table class="conditions__table">
-
-      <thead>
-
-        <tr>
-          <th style="width:150px">High</th>
-          <th>Low</th>
-        </tr>
-
-      </thead>
-
-      <tbody>
-
-        <tr>
-          <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_high, current_high_c) if current_high }}</td>
-          <td>{{ '{:.2f}F°/{:.1f}C°'.format(current_low, current_low_c) if current_low }}</td>
-        </tr>
-
-      </tbody>
-
-    </table>
-
-    <table class="conditions__table">
-
-      <thead>
-
-        <tr>
-          <th style="width:150px">Sunrise</th>
-          <th>Sunset</th>
-        </tr>
-
-      </thead>
-
-      <tbody>
-
-        <tr>
-          <td>{{ sunrise if sunrise }}</td>
-          <td>{{ sunset if sunset }}</td>
-        </tr>
-
-      </tbody>
-
-    </table>
-  
-  <h4>Hourly:</h4>
 
     <table class="hourly-table">
 
       <thead>
 
         <tr>
-          <th style="width:50px">Hour</th>
-          <th style="width:170px">Temperature F/C</th>
+          <th style="width:70px">Hourly</th>
+          <th style="width:70px">Temp</th>
           <th>Forecast</th>
           <th class="hidden">Humidity</th>
           <th class="hidden">Wind_MPH</th>
@@ -127,7 +68,7 @@
 
           <tr>
             <td>{{ '{}h'.format(hours[num]) if hours }}</td>
-            <td>{{ '{:.2f}F°/{:.1f}C°'.format(temps[num], temps_celcius[num]) if temps }}</td>
+            <td>{{ '{:.1f}F°'.format(temps[num]) if temps }}</td>
             <td>{{ forecast[num] if forecast }}</td>
             <td class="hidden">{{ humidity[num] if humidity }}</td>
             <td class="hidden">{{ '{:.2f}'.format(wind_speed[num]) if wind_speed }}</td>
@@ -141,14 +82,12 @@
 
     </table>
 
-    <h4>Daily:</h4>
-
     <table class="daily-table">
 
       <thead>
 
         <tr>
-          <th style="width:125px">Date</th>
+          <th style="width:125px">Daily</th>
           <th>High/Low</th>
         </tr>
 
@@ -160,7 +99,7 @@
 
           <tr>
             <td>{{ daily_datetime[i] if daily_datetime }}</td>
-            <td>{{ '{:.2f}F°/{:.2f}F°'.format(daily_high[i], daily_low[i]) if daily_high }}</td>
+            <td>{{ '{:.1f}F°/{:.1f}F°'.format(daily_high[i], daily_low[i]) if daily_high }}</td>
           </tr>
 
         {% endfor %}
@@ -169,16 +108,10 @@
 
     </table>
 
-    <h4>Location:</h4>
-
     <table class="location-table">
 
       <tr>
         <td>Timezone: {{ timezone if timezone }}</td>
-      </tr>
-
-      <tr>
-        <td>Location: {{ local_address if local_address }}</td>
       </tr>
 
       <tr>
@@ -206,6 +139,6 @@
 
   </footer>
 
-  <script src="{{ url_for('static', filename='js/datetime.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
 {% endblock %}

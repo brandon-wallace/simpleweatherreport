@@ -5,7 +5,6 @@ from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut, GeocoderServiceError
 from datetime import datetime
 from flask import render_template, request, redirect, url_for
-# from flask_babel import format_datetime
 from application import app, babel, api_key
 from application.forms import AddressForm
 
@@ -39,8 +38,8 @@ def get_user_location():
         lon = text['lon']
         city = text['city']
         region_name = text['regionName']
-        country_code = text['countryCode']
-        return lat, lon, region_name, city, country_code
+        country = text['country']
+        return lat, lon, region_name, city, country
     else:
         return None
 
@@ -59,29 +58,28 @@ def index():
     '''Index route'''
 
     form = AddressForm()
-    lat, lon, city, region_name, country_code = get_user_location()
+    lat, lon, city, region_name, country = get_user_location()
     url = requests.get(f'https://api.openweathermap.org/data/2.5/onecall?'
                        f'lat={lat}&lon={lon}&appid={api_key}&units=imperial')
     if url.status_code == 200:
         report = url.text
         data = json.loads(report)
         json.dumps(data, ensure_ascii=False)
+        icon_id = data['current']['weather'][0]['id']
         current_temp = data['current']['temp']
         current_forecast = data['current']['weather'][0]['description']
         current_low = data['daily'][0]['temp']['min']
         current_high = data['daily'][0]['temp']['max']
         current_weather = {
+                'icon_id': icon_id,
                 'current_temp': current_temp,
                 'current_forecast': current_forecast,
                 'current_low': current_low,
                 'current_high': current_high,
                 'city': city,
                 'region_name': region_name,
-                'country_code': country_code
+                'country': country
                 }
-    else:
-        print('A failure occurred.')
-
     if form.validate_on_submit():
         return redirect(url_for('get_weather_report'))
     return render_template('index.html', form=form, **current_weather)
@@ -111,8 +109,8 @@ def get_weather_report():
             report = url.text
             data = json.loads(report)
             json.dumps(data, ensure_ascii=False)
+            icon_id = data['current']['weather'][0]['id']
             temps = []
-            temps_celcius = []
             hours = []
             forecast = []
             humidity = []
@@ -124,13 +122,10 @@ def get_weather_report():
             daily_datetime = []
 
             current_temp = data['current']['temp']
-            current_temp_c = (current_temp - 32) * 5.0 / 9.0
             current_forecast = data['current']['weather'][0]['description']
             tzone = data['timezone']
             current_low = data['daily'][0]['temp']['min']
-            current_low_c = (current_low - 32) * 5.0 / 9.0
             current_high = data['daily'][0]['temp']['max']
-            current_high_c = (current_high - 32) * 5.0 / 9.0
             sunrise = datetime.fromtimestamp(data['daily'][0]['sunrise'],
                                              tz=pytz.timezone(
                                              tzone)).strftime('%Hh:%Mm')
@@ -141,7 +136,6 @@ def get_weather_report():
             for txt in data['hourly']:
                 hours.append(datetime.fromtimestamp(txt['dt']).strftime("%H"))
                 temps.append(txt['temp'])
-                temps_celcius.append((int(txt['temp']) - 32) * 5.0 / 9.0)
                 forecast.append(txt['weather'][0]['description'])
                 humidity.append(txt['humidity'])
                 wind_speed.append(txt['wind_speed'])
@@ -156,25 +150,23 @@ def get_weather_report():
                                       '%a %b %d'))
 
                 content = {
+                    'lat': lat,
+                    'lon': lon,
+                    'local_address': local_address,
+                    'icon_id': icon_id,
                     'daily_high': daily_high,
                     'daily_low': daily_low,
                     'daily_datetime': daily_datetime,
                     'sunrise': sunrise,
                     'sunset': sunset,
                     'local_address': local_address,
-                    'lat': lat,
-                    'lon': lon,
                     'current_temp': current_temp,
-                    'current_temp_c': current_temp_c,
                     'current_forecast': current_forecast,
                     'timezone': tzone,
                     'current_low': current_low,
-                    'current_low_c': current_low_c,
                     'current_high': current_high,
-                    'current_high_c': current_high_c,
                     'hours': hours,
                     'temps': temps,
-                    'temps_celcius': temps_celcius,
                     'forecast': forecast,
                     'humidity': humidity,
                     'wind_speed': wind_speed,
