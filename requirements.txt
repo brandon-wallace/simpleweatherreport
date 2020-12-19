@@ -1,6 +1,6 @@
 Babel==2.9.0
-certifi==2020.11.8
-chardet==3.0.4
+certifi==2020.12.5
+chardet==4.0.0
 click==7.1.2
 Flask==1.1.2
 Flask-Babel==2.0.0
@@ -15,7 +15,7 @@ MarkupSafe==1.1.1
 nominatim==0.1
 python-dotenv==0.15.0
 pytz==2020.4
-requests==2.25.0
+requests==2.25.1
 urllib3==1.26.2
 Werkzeug==1.0.1
 WTForms==2.3.3
