@@ -36,7 +36,9 @@ body {
 }
 
 body {
-    padding-bottom: 30px;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
     font-family: 'Hack-Regular', monospace;
     background-color: #CCEEFF;
     background-color: var(--soft-blue, #CCEEFF);
@@ -48,7 +50,6 @@ h1, h2, h3, h4, h5, h6, p {
 
 main {
     width: 100%;
-    min-height: 100%;
     padding: 0 .5rem 0 .5rem;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
@@ -58,11 +59,6 @@ main {
 
 header {
     margin: 0 .5rem;
-}
-
-.container {
-    min-height: 100%;
-    position: relative;
 }
 
 .header__title {
@@ -327,11 +323,10 @@ tr th {
 }
 
 footer {
-    bottom: 0;
     width: 100%;
-    height: 30px;
+    height: 25px;
     padding: 0 .5rem;
-    position: absolute;
+    margin-top: auto;
     box-sizing: border-box;
 }
 
