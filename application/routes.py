@@ -64,7 +64,7 @@ def geolocation_search(location):
     '''Get latitude and longitude from geolocation'''
 
     try:
-        geolocator = Nominatim(user_agent='yourweather.cc', timeout=3)
+        geolocator = Nominatim(user_agent='yourweather.cc', timeout=6)
         return geolocator.geocode(location)
     except (GeocoderTimedOut, GeocoderServiceError):
         logger.error(f"Geocode Error!", exc_info=True)
@@ -118,6 +118,7 @@ def weather_report():
     form = AddressForm()
 
     address = request.form.get('address')
+    print(address)
     location = geolocation_search(address)
 
     if location is None:
