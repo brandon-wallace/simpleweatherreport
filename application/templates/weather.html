@@ -27,7 +27,7 @@
 
     </div>
 
-    <form action="{{ url_for('get_weather_report') }}" method="POST">
+    <form action="{{ url_for('weather_report') }}" method="POST">
   
       {{ form.csrf_token }}
       {{ form.address(class_='form__address', placeholder='Enter Location') }}
@@ -115,11 +115,11 @@
       </tr>
 
       <tr>
-        <td>Latitude: {{ lat if lat }}</td>
+        <td>Latitude: {{ latitude if latitude }}</td>
       </tr>
 
       <tr>
-        <td>Longitude: {{ lon if lon }}</td>
+        <td>Longitude: {{ longitude if longitude }}</td>
       </tr>
 
     </table>

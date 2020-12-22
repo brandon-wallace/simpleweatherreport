@@ -2,11 +2,8 @@ import os
 from flask import Flask
 from flask_babel import Babel
 
-
 app = Flask(__name__)
 babel = Babel()
-
-api_key = os.getenv('API_KEY')
 
 
 def create_app():

@@ -23,7 +23,7 @@
       <span class="tile__forecast">{{ current_forecast if current_forecast }}</span>
       <span class="tile__temp-low">{{ 'low: {:.1f}F°'.format(current_low) if current_low }} {{ 'high: {:.1f}F°'.format(current_high) if current_high }}</span>
       {% if country %}
-        <span class="tile__location">{{ '{}, {}, {}'.format(city, region_name, country) }}</span>
+        <span class="tile__location">{{ '{}, {}, {}'.format(city, region, country) }}</span>
       {% else %}
         <span class="tile__location">{{ '{}'.format(local_address) if local_address }}</span>
       {% endif %}

@@ -1,4 +1,4 @@
-# run.py
+# wsgi.py
 
 from application import create_app
 
