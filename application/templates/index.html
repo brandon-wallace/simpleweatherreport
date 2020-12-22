@@ -33,6 +33,7 @@
     <form action="{{ url_for('index') }}" method="POST">
 
       {{ form.csrf_token }}
+      
       {{ form.address(class_='form__address', placeholder='Enter Location', autofocus=true) }}
       {{ form.submit(class_='form__btn') }}
 

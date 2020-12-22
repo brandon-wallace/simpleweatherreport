@@ -144,7 +144,7 @@ header {
     width: 100%;
     margin: 0 auto;
     font-size: 7rem;
-    min-height: 150px;
+    min-height: 135px;
     text-align: center;
     box-sizing: border-box;
 }
@@ -333,6 +333,7 @@ footer {
 .message {
     color: #CC0000;
     text-align: center;
+    margin-bottom: .5em;
 }
 
 .hidden {

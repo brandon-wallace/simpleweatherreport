@@ -6,7 +6,7 @@ from os import environ
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut, GeocoderServiceError
 from datetime import datetime
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request
 from application import app, babel
 from application.forms import AddressForm
 
@@ -47,8 +47,8 @@ def get_user_ip_address():
 def find_user_location(ip_addr):
     '''Get latitude and longitude from IP address'''
 
-    url = requests.get(f'http://ip-api.com/json/{ip_addr}?fields=status,message,region,country,city,zip,lat,lon,timezone')
-    logger.info(f'find_user_location {url}')
+    url = requests.get(f'http://ip-api.com/json/{ip_addr}?fields=status,'
+                       f'message,region,country,city,zip,lat,lon,timezone')
     if url.status_code == 200:
         data = json.loads(url.text)
         lat = data['lat']
@@ -57,7 +57,6 @@ def find_user_location(ip_addr):
         region = data['region']
         country = data['country']
         return lat, lon, city, region, country
-    logger.error(f"An error has occurred: {lat} {lon} {city} {region} {country}.")
     return None
 
 
@@ -76,8 +75,8 @@ def get_weather_report(lat, lon):
     '''Retrieve weather report'''
 
     owm_api_key = environ.get('OWM_API_KEY')
-    url = requests.get(f'https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&appid={owm_api_key}&units=imperial')
-    logger.info(f'get_weather_report {url}')
+    url = requests.get(f'https://api.openweathermap.org/data/2.5/onecall?lat='
+                       f'{lat}&lon={lon}&appid={owm_api_key}&units=imperial')
     if url.status_code == 200:
         text = url.json()
         return text
@@ -108,95 +107,80 @@ def index():
                  'region': region,
                  'country': country
                  }
+
     if form.validate_on_submit():
-        return redirect(url_for('weather_report'))
-    return render_template('index.html', form=form, **current_weather)
-
-
-@app.route('/weather', methods=['GET', 'POST'])
-def weather_report():
-    '''Display local weather report based on geolocation'''
-
-    form = AddressForm()
-    if form.validate_on_submit():
-        address = request.form.get('address')
-        logger.info(f'weather_report route form: {address}')
+        address = request.form['address']
         location = geolocation_search(address)
-
         if location is None:
             return render_template('index.html', form=form,
                                    message="Location Not Found")
-        else:
-            latitude = location.latitude
-            longitude = location.longitude
-            local_address = location.address
-            data = get_weather_report(latitude, longitude)
+        latitude = location.latitude
+        longitude = location.longitude
+        local_address = location.address
+        data = get_weather_report(latitude, longitude)
 
-            icon_id = data['current']['weather'][0]['id']
-            temps = []
-            hours = []
-            forecast = []
-            humidity = []
-            wind_speed = []
-            visibility = []
-            pressure = []
-            daily_high = []
-            daily_low = []
-            daily_datetime = []
-
-            current_temp = data['current']['temp']
-            current_forecast = data['current']['weather'][0]['description']
-            tzone = data['timezone']
-            current_low = data['daily'][0]['temp']['min']
-            current_high = data['daily'][0]['temp']['max']
-            sunrise = datetime.fromtimestamp(data['daily'][0]['sunrise'],
-                                             tz=pytz.timezone(
-                                             tzone)).strftime('%Hh:%Mm')
-            sunset = datetime.fromtimestamp(data['daily'][0]['sunset'],
-                                            tz=pytz.timezone(
-                                            tzone)).strftime('%Hh:%Mm')
-
-            for txt in data['hourly']:
-                hours.append(datetime.fromtimestamp(txt['dt']).strftime("%H"))
-                temps.append(txt['temp'])
-                forecast.append(txt['weather'][0]['description'])
-                humidity.append(txt['humidity'])
-                wind_speed.append(txt['wind_speed'])
-                visibility.append(txt['visibility'])
-                pressure.append(txt['pressure'])
-
-            for i in range(7):
-                daily_high.append(data['daily'][i]['temp']['max'])
-                daily_low.append(data['daily'][i]['temp']['min'])
-                daily_datetime.append(datetime.fromtimestamp(
-                                      data['daily'][i]['dt']).strftime(
-                                      '%a %b %d'))
-
-                content = {
-                    'latitude': latitude,
-                    'longitude': longitude,
-                    'local_address': local_address,
-                    'icon_id': icon_id,
-                    'daily_high': daily_high,
-                    'daily_low': daily_low,
-                    'daily_datetime': daily_datetime,
-                    'sunrise': sunrise,
-                    'sunset': sunset,
-                    'local_address': local_address,
-                    'current_temp': current_temp,
-                    'current_forecast': current_forecast,
-                    'timezone': tzone,
-                    'current_low': current_low,
-                    'current_high': current_high,
-                    'hours': hours,
-                    'temps': temps,
-                    'forecast': forecast,
-                    'humidity': humidity,
-                    'wind_speed': wind_speed,
-                    'visibility': visibility,
-                    'pressure': pressure
-                    }
-    return render_template('weather.html', form=form, **content)
+        icon_id = data['current']['weather'][0]['id']
+        temps = []
+        hours = []
+        forecast = []
+        humidity = []
+        wind_speed = []
+        visibility = []
+        pressure = []
+        daily_high = []
+        daily_low = []
+        daily_datetime = []
+        current_temp = data['current']['temp']
+        current_forecast = data['current']['weather'][0]['description']
+        tzone = data['timezone']
+        current_low = data['daily'][0]['temp']['min']
+        current_high = data['daily'][0]['temp']['max']
+        sunrise = datetime.fromtimestamp(data['daily'][0]['sunrise'],
+                                         tz=pytz.timezone(
+                                         tzone)).strftime('%Hh:%Mm')
+        sunset = datetime.fromtimestamp(data['daily'][0]['sunset'],
+                                        tz=pytz.timezone(
+                                        tzone)).strftime('%Hh:%Mm')
+        for txt in data['hourly']:
+            hours.append(datetime.fromtimestamp(txt['dt']).strftime("%H"))
+            temps.append(txt['temp'])
+            forecast.append(txt['weather'][0]['description'])
+            humidity.append(txt['humidity'])
+            wind_speed.append(txt['wind_speed'])
+            visibility.append(txt['visibility'])
+            pressure.append(txt['pressure'])
+        for i in range(7):
+            daily_high.append(data['daily'][i]['temp']['max'])
+            daily_low.append(data['daily'][i]['temp']['min'])
+            daily_datetime.append(datetime.fromtimestamp(
+                                  data['daily'][i]['dt']).strftime(
+                                  '%a %b %d'))
+        content = {
+                'latitude': latitude,
+                'longitude': longitude,
+                'local_address': local_address,
+                'icon_id': icon_id,
+                'daily_high': daily_high,
+                'daily_low': daily_low,
+                'daily_datetime': daily_datetime,
+                'sunrise': sunrise,
+                'sunset': sunset,
+                'local_address': local_address,
+                'current_temp': current_temp,
+                'current_forecast': current_forecast,
+                'timezone': tzone,
+                'current_low': current_low,
+                'current_high': current_high,
+                'hours': hours,
+                'temps': temps,
+                'forecast': forecast,
+                'humidity': humidity,
+                'wind_speed': wind_speed,
+                'visibility': visibility,
+                'pressure': pressure
+                }
+        return render_template('weather.html', form=form, **content)
+    return render_template('index.html', form=form, **current_weather)
 
 
 @app.errorhandler(404)

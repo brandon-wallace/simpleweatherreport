@@ -30,6 +30,7 @@
     <form action="{{ url_for('weather_report') }}" method="POST">
   
       {{ form.csrf_token }}
+
       {{ form.address(class_='form__address', placeholder='Enter Location') }}
       {{ form.submit(class_='form__btn') }}
   
