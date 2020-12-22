@@ -10,10 +10,13 @@ from flask import render_template, request, redirect, url_for
 from application import app, babel
 from application.forms import AddressForm
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s %(module)s %(name)s \
-                            %(funcName)s %(lineno)s %(message)s')
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+file_handler = logging.FileHandler('error.log')
+formatter = logging.Formatter('%(asctime)s: %(levelname)s: \
+                              %(name)s: %(message)s')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
 
 
 @babel.localeselector
@@ -35,29 +38,25 @@ def get_user_ip_address():
     if ip_address == '127.0.0.1':
         ip_address = requests.get('http://ipecho.net/plain')
         if ip_address.status_code != 200:
+            logger.warning(f"Not able to get IP address.")
             ip_address = requests.get('http://ip.42.pl/raw')
         ip_address = ip_address.text
-    logger.debug(f'IP: {ip_address}')
     return ip_address
 
 
 def find_user_location(ip_addr):
     '''Get latitude and longitude from IP address'''
 
-    print(ip_addr)
     url = requests.get(f'http://ip-api.com/json/{ip_addr}?fields=status,message,region,country,city,zip,lat,lon,timezone')
     if url.status_code == 200:
         data = json.loads(url.text)
-        logger.debug(f"Latitude: {data['lat']}")
-        print(data)
         lat = data['lat']
         lon = data['lon']
         city = data['city']
         region = data['region']
         country = data['country']
         return lat, lon, city, region, country
-        logger.debug(f"Returning: {lat} {lon} {city} {region} {country}")
-    logger.debug(f"Request failed!")
+    logger.error(f"An error has occurred: {lat} {lon} {city} {region} {country}.")
     return None
 
 
@@ -68,6 +67,7 @@ def geolocation_search(location):
         geolocator = Nominatim(user_agent='yourweather.cc', timeout=3)
         return geolocator.geocode(location)
     except (GeocoderTimedOut, GeocoderServiceError):
+        logger.error(f"Geocode Error!", exc_info=True)
         return None
 
 
