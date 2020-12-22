@@ -1,3 +1,4 @@
+import logging
 import json
 import pytz
 import requests
@@ -8,6 +9,11 @@ from datetime import datetime
 from flask import render_template, request, redirect, url_for
 from application import app, babel
 from application.forms import AddressForm
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(module)s %(name)s \
+                            %(funcName)s %(lineno)s %(message)s')
+logger = logging.getLogger(__name__)
 
 
 @babel.localeselector
@@ -31,15 +37,18 @@ def get_user_ip_address():
         if ip_address.status_code != 200:
             ip_address = requests.get('http://ip.42.pl/raw')
         ip_address = ip_address.text
+    logger.debug(f'IP: {ip_address}')
     return ip_address
 
 
 def find_user_location(ip_addr):
     '''Get latitude and longitude from IP address'''
 
+    print(ip_addr)
     url = requests.get(f'http://ip-api.com/json/{ip_addr}?fields=status,message,region,country,city,zip,lat,lon,timezone')
     if url.status_code == 200:
         data = json.loads(url.text)
+        logger.debug(f"Latitude: {data['lat']}")
         print(data)
         lat = data['lat']
         lon = data['lon']
@@ -47,6 +56,8 @@ def find_user_location(ip_addr):
         region = data['region']
         country = data['country']
         return lat, lon, city, region, country
+        logger.debug(f"Returning: {lat} {lon} {city} {region} {country}")
+    logger.debug(f"Request failed!")
     return None
 
 

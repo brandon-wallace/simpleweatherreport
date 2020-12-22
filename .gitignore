@@ -2,4 +2,5 @@
 *.pyc
 .venv/
 venv/
+error.log
 __pycache__/
