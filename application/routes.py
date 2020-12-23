@@ -31,23 +31,18 @@ def get_user_ip_address():
 
     if 'X-Forwarded-For' in request.headers:
         ip_address = str(request.headers['X-Forwarded-For'])
-        logger.debug(f'IP_ADDRESS: {ip_address}')
-        print(f'IP_ADDRESS: {ip_address}')
     else:
         ip_address = str(request.environ.get('HTTP_X_REAL_IP',
                          request.remote_addr))
-        logger.debug(f'IP_ADDRESS: {ip_address}')
-        print(f'IP_ADDRESS: {ip_address}')
 
     if ip_address == '127.0.0.1':
         ip_address = requests.get('http://ipecho.net/plain')
         if ip_address.status_code != 200:
             logger.warning(f"Not able to get IP address.")
             ip_address = requests.get('http://ip.42.pl/raw')
-        logger.debug(f'IP_ADDRESS: {ip_address}')
-        print(f'IP_ADDRESS: {ip_address}')
-        print(f'IP_ADDRESS: {ip_address.split(",")[0]}')
         ip_address = ip_address.text
+    # Needed to fix Heroku/Cloudflare SSL issue.
+    ip_address = ip_address.split(",")[0]
     return ip_address
 
 
@@ -56,8 +51,6 @@ def find_user_location(ip_addr):
 
     url = requests.get(f'http://ip-api.com/json/{ip_addr}?fields=status,'
                        f'message,region,country,city,zip,lat,lon,timezone')
-    logger.debug(f'URL: {url}')
-    print(f'URL: {url}')
     if url.status_code == 200:
         data = json.loads(url.text)
         lat = data['lat']
