@@ -135,6 +135,10 @@ header {
     font-size: 4.5rem;
 }
 
+.digits--small {
+    font-size: 3rem;
+}
+
 .tile__temp-units {
     font-size: 2.5rem;
     font-weight: bold;

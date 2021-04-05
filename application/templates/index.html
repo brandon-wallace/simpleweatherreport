@@ -19,6 +19,7 @@
     <div class="tile">
 
       <p class="tile__temperature"><span class="tile__digits">{{ '{:.1f}'.format(current_temp) if current_temp }}</span><span class="tile__temp-units">F°</span></p>
+      <p class="tile__temperature"><span class="tile__digits">{{ '{:.1f}'.format(current_temp_celcius) if current_temp_celcius }}</span><span class="tile__temp-units">C°</span></p>
       <span class="tile__icon"><i class="wi wi-owm-{{ icon_id if icon_id }}"></i></span>
       <span class="tile__forecast">{{ current_forecast if current_forecast }}</span>
       <span class="tile__temp-low">{{ 'low: {:.1f}F°'.format(current_low) if current_low }} {{ 'high: {:.1f}F°'.format(current_high) if current_high }}</span>

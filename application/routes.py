@@ -73,6 +73,12 @@ def geolocation_search(location):
         return None
 
 
+def fahrenheit_to_celcius(temp_fahrenheit):
+    '''Convert fahenheit to celcius'''
+
+    return (temp_fahrenheit - 32) / 1.8
+
+
 def get_weather_report(lat, lon):
     '''Retrieve weather report'''
 
@@ -133,6 +139,7 @@ def index():
         daily_low = []
         daily_datetime = []
         current_temp = data['current']['temp']
+        current_temp_celcius = fahrenheit_to_celcius(current_temp)
         current_forecast = data['current']['weather'][0]['description']
         tzone = data['timezone']
         current_low = data['daily'][0]['temp']['min']
@@ -169,6 +176,7 @@ def index():
                 'sunset': sunset,
                 'local_address': local_address,
                 'current_temp': current_temp,
+                'current_temp_celcius': current_temp_celcius,
                 'current_forecast': current_forecast,
                 'timezone': tzone,
                 'current_low': current_low,
