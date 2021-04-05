@@ -102,12 +102,14 @@ def index():
     data = get_weather_report(latitude, longitude)
     icon_id = data['current']['weather'][0]['id']
     current_temp = data['current']['temp']
+    current_temp_celcius = fahrenheit_to_celcius(current_temp)
     current_forecast = data['current']['weather'][0]['description']
     current_low = data['daily'][0]['temp']['min']
     current_high = data['daily'][0]['temp']['max']
     current_weather = {
                  'icon_id': icon_id,
                  'current_temp': current_temp,
+                 'current_temp_celcius': current_temp_celcius,
                  'current_forecast': current_forecast,
                  'current_low': current_low,
                  'current_high': current_high,
