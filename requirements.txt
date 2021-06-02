@@ -1,21 +1,25 @@
-Babel==2.9.0
-certifi==2020.12.5
+-i https://pypi.python.org/simple/
+babel==2.9.1
+certifi==2021.5.30
 chardet==4.0.0
-click==7.1.2
-Flask==1.1.2
-Flask-Babel==2.0.0
-Flask-WTF==0.14.3
+click==8.0.1
+flask-babel==2.0.0
+flask-wtf==0.14.3
+flask==1.1.2
 geographiclib==1.50
-geopy==2.0.0
+geopy==2.1.0
 gunicorn==20.0.4
 idna==2.10
-itsdangerous==1.1.0
-Jinja2==2.11.2
-MarkupSafe==1.1.1
+importlib-metadata==4.4.0 ; python_version < '3.8'
+itsdangerous==2.0.1
+jinja2==3.0.1
+markupsafe==2.0.1
 nominatim==0.1
 python-dotenv==0.15.0
-pytz==2020.4
+pytz==2021.1
 requests==2.25.1
-urllib3==1.26.2
-Werkzeug==1.0.1
-WTForms==2.3.3
+typing-extensions==3.10.0.0 ; python_version < '3.8'
+urllib3==1.26.5
+werkzeug==2.0.1
+wtforms==2.3.3
+zipp==3.4.1
