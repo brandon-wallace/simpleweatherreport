@@ -1,5 +1,7 @@
 // Display date.
 
+let loader = document.querySelector('.dots');
+
 (function() {
 
     let today = new Date();
@@ -22,9 +24,11 @@
 
 // Display a loading icon while API query takes place.
 
-window.addEventListener('pageshow', () => {
-    document.querySelector('.dots').style.display = 'none';
-});
+if (loader) {
+    window.addEventListener('pageshow', () => {
+        document.querySelector('.dots').style.display = 'none';
+    });
+}
 
 
 const form = document.querySelector('form');
