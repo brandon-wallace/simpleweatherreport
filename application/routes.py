@@ -88,6 +88,9 @@ def get_weather_report(lat, lon):
     if url.status_code == 200:
         text = url.json()
         return text
+    if url.status_code == 401:
+        print('API key: Unauthorized')
+        return None
     return None
 
 
@@ -107,16 +110,16 @@ def index():
     current_low = data['daily'][0]['temp']['min']
     current_high = data['daily'][0]['temp']['max']
     current_weather = {
-                 'icon_id': icon_id,
-                 'current_temp': current_temp,
-                 'current_temp_celcius': current_temp_celcius,
-                 'current_forecast': current_forecast,
-                 'current_low': current_low,
-                 'current_high': current_high,
-                 'city': city,
-                 'region': region,
-                 'country': country
-                 }
+         'icon_id': icon_id,
+         'current_temp': current_temp,
+         'current_temp_celcius': current_temp_celcius,
+         'current_forecast': current_forecast,
+         'current_low': current_low,
+         'current_high': current_high,
+         'city': city,
+         'region': region,
+         'country': country
+         }
 
     if form.validate_on_submit():
         address = request.form['address']
@@ -160,13 +163,13 @@ def index():
             wind_speed.append(txt['wind_speed'])
             visibility.append(txt['visibility'])
             pressure.append(txt['pressure'])
-        for i in range(7):
-            daily_high.append(data['daily'][i]['temp']['max'])
-            daily_low.append(data['daily'][i]['temp']['min'])
-            daily_datetime.append(datetime.fromtimestamp(
-                                  data['daily'][i]['dt']).strftime(
-                                  '%a %b %d'))
-        content = {
+            for i in range(7):
+                daily_high.append(data['daily'][i]['temp']['max'])
+                daily_low.append(data['daily'][i]['temp']['min'])
+                daily_datetime.append(datetime.fromtimestamp(
+                                      data['daily'][i]['dt']).strftime(
+                                      '%a %b %d'))
+            content = {
                 'latitude': latitude,
                 'longitude': longitude,
                 'local_address': local_address,
