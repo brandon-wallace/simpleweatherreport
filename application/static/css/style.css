@@ -15,7 +15,6 @@
          url('../fonts/weathericons-regular-webfont.svg#svgFontName') format('svg'); 
 }
 
-
 :root {
     --blue: #66B3FF;
     --white: #FFFFFF;
@@ -309,6 +308,8 @@ tr th {
 }
 
 .links {
+    height: 100px;
+    text-align: center;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -318,7 +319,7 @@ tr th {
             flex-direction: column;
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
-            justify-content: space-between;
+            justify-content: center;
 }
 
 .link__item {
@@ -328,7 +329,7 @@ tr th {
 
 footer {
     width: 100%;
-    height: 25px;
+    height: 100px;
     padding: 0 .5rem;
     margin-top: auto;
     box-sizing: border-box;
@@ -414,6 +415,8 @@ footer {
         -webkit-box-direction: normal;
             -ms-flex-direction: row;
                 flex-direction: row;
+                align-items: center;
+                justify-content: space-around;
     }
 }
 
