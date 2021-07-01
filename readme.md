@@ -11,35 +11,34 @@ Requests
 Geopy
 ```
 
-# Run
+# Clone repository
 ```
 $ git clone https://github.com/brandon-wallace/simpleweatherreport.git
-```
 
-```
 $ cd simpleweatherreport/
 ```
 
+# Create a .env file
 ```
-$ touch .env
-
 $ vim .env
-Add these 4 lines.
+# Add these 4 lines.
 
 FLASK_APP=run.py
 FLASK_ENV=development
 SECRET_KEY=<your_secret_key>
-API_KEY=<your_api_key>
+OWM_API_KEY=<your_api_key>
 ```
 
+# Install requirements
 ```
 $ pipenv install
 ```
 
+# Start application
 ```
 $ flask run
 ```
 
-# Go to 
+# Browse to address:
 
 http://127.0.0.1:5000
