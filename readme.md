@@ -26,7 +26,7 @@ $ vim .env
 FLASK_APP=run.py
 FLASK_ENV=development
 SECRET_KEY=<your_secret_key>
-OWM_API_KEY=<your_api_key>
+OWM_API_KEY=<your_openweathermap_api_key>
 ```
 
 # Install requirements
