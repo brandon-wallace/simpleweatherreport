@@ -16,6 +16,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - run: |
+      git fetch --prune --unshallow
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
