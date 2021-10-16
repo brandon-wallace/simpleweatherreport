@@ -34,3 +34,11 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+    - name: Heroku Deploy
+      env:
+        HEROKU_TOKEN: ${{ secrets.HEROKU_TOKEN }}
+        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+      if: github.ref == 'refs/heads/main' && job.status == 'success'
+      run: |
+        git remote add heroku https://heroku:$HEROKU_TOKEN@git.heroku.com/$HUROKU_APP_NAME.git
+        git push horeku HEAD:main -f
