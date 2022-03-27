@@ -38,7 +38,7 @@ def get_user_ip_address():
     if ip_address == '127.0.0.1':
         ip_address = requests.get('http://ipecho.net/plain')
         if ip_address.status_code != 200:
-            logger.warning(f"Not able to get IP address.")
+            logger.warning("Not able to get IP address.")
             ip_address = requests.get('http://ip.42.pl/raw')
         ip_address = ip_address.text
     # Needed to fix Heroku/Cloudflare SSL issue.
@@ -69,7 +69,7 @@ def geolocation_search(location):
         geolocator = Nominatim(user_agent='yourweather.cc', timeout=6)
         return geolocator.geocode(location)
     except (GeocoderTimedOut, GeocoderServiceError):
-        logger.error(f"Geocode Error!", exc_info=True)
+        logger.error("Geocode Error!", exc_info=True)
         return None
 
 
@@ -98,27 +98,72 @@ def get_weather_report(lat, lon):
 def index():
     '''Index route'''
 
+    temps = []
+    hours = []
+    forecast = []
+    humidity = []
+    wind_speed = []
+    visibility = []
+    pressure = []
+    daily_high = []
+    daily_low = []
+    daily_datetime = []
     latitude, longitude, city, region, country = None, None, None, None, None
     form = AddressForm()
     ip_address = get_user_ip_address()
     latitude, longitude, city, region, country = find_user_location(ip_address)
+    # local_address = location.address
     data = get_weather_report(latitude, longitude)
+    tzone = data['timezone']
     icon_id = data['current']['weather'][0]['id']
     current_temp = data['current']['temp']
     current_temp_celcius = fahrenheit_to_celcius(current_temp)
     current_forecast = data['current']['weather'][0]['description']
     current_low = data['daily'][0]['temp']['min']
     current_high = data['daily'][0]['temp']['max']
+    sunrise = datetime.fromtimestamp(data['daily'][0]['sunrise'],
+                                     tz=pytz.timezone(
+                                     tzone)).strftime('%Hh:%Mm')
+    sunset = datetime.fromtimestamp(data['daily'][0]['sunset'],
+                                    tz=pytz.timezone(
+                                    tzone)).strftime('%Hh:%Mm')
+    for txt in data['hourly']:
+        hours.append(datetime.fromtimestamp(txt['dt']).strftime("%H"))
+        temps.append(txt['temp'])
+        forecast.append(txt['weather'][0]['description'])
+        humidity.append(txt['humidity'])
+        wind_speed.append(txt['wind_speed'])
+        visibility.append(txt['visibility'])
+        pressure.append(txt['pressure'])
+        for i in range(7):
+            daily_high.append(data['daily'][i]['temp']['max'])
+            daily_low.append(data['daily'][i]['temp']['min'])
+            daily_datetime.append(datetime.fromtimestamp(
+                                  data['daily'][i]['dt']).strftime(
+                                  '%a %b %d'))
     current_weather = {
+         'latitude': latitude,
+         'longitude': longitude,
+         # 'local_address': local_address,
          'icon_id': icon_id,
+         'daily_high': daily_high,
+         'daily_low': daily_low,
+         'daily_datetime': daily_datetime,
+         'sunrise': sunrise,
+         'sunset': sunset,
          'current_temp': current_temp,
          'current_temp_celcius': current_temp_celcius,
          'current_forecast': current_forecast,
+         'timezone': tzone,
          'current_low': current_low,
          'current_high': current_high,
-         'city': city,
-         'region': region,
-         'country': country
+         'hours': hours,
+         'temps': temps,
+         'forecast': forecast,
+         'humidity': humidity,
+         'wind_speed': wind_speed,
+         'visibility': visibility,
+         'pressure': pressure
          }
 
     if form.validate_on_submit():
@@ -169,32 +214,7 @@ def index():
                 daily_datetime.append(datetime.fromtimestamp(
                                       data['daily'][i]['dt']).strftime(
                                       '%a %b %d'))
-            content = {
-                'latitude': latitude,
-                'longitude': longitude,
-                'local_address': local_address,
-                'icon_id': icon_id,
-                'daily_high': daily_high,
-                'daily_low': daily_low,
-                'daily_datetime': daily_datetime,
-                'sunrise': sunrise,
-                'sunset': sunset,
-                'local_address': local_address,
-                'current_temp': current_temp,
-                'current_temp_celcius': current_temp_celcius,
-                'current_forecast': current_forecast,
-                'timezone': tzone,
-                'current_low': current_low,
-                'current_high': current_high,
-                'hours': hours,
-                'temps': temps,
-                'forecast': forecast,
-                'humidity': humidity,
-                'wind_speed': wind_speed,
-                'visibility': visibility,
-                'pressure': pressure
-                }
-        return render_template('weather.html', form=form, **content)
+        return render_template('weather.html', form=form, **current_weather)
     return render_template('index.html', form=form, **current_weather)
 
 
