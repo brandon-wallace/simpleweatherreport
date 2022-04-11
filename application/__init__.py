@@ -1,4 +1,4 @@
-from os import environ
+from os import environ, urandom
 from flask import Flask
 from flask_babel import Babel
 
@@ -11,7 +11,7 @@ def create_app():
 
     app.config['DEBUG'] = False
     app.config['FLASK_ENV'] = environ.get('FLASK_ENV')
-    app.config['SECRET_KEY'] = environ.get('SECRET_KEY')
+    app.config['SECRET_KEY'] = urandom(32)
     app.config['OWM_API_KEY'] = environ.get('OWM_API_KEY')
     app.config['BABEL_DEFAULT_LOCALE'] = 'en'
 
