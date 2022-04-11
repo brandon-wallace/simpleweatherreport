@@ -114,33 +114,34 @@ def index():
     latitude, longitude, city, region, country = find_user_location(ip_address)
     # local_address = location.address
     data = get_weather_report(latitude, longitude)
-    tzone = data['timezone']
-    icon_id = data['current']['weather'][0]['id']
-    current_temp = data['current']['temp']
-    current_temp_celcius = fahrenheit_to_celcius(current_temp)
-    current_forecast = data['current']['weather'][0]['description']
-    current_low = data['daily'][0]['temp']['min']
-    current_high = data['daily'][0]['temp']['max']
-    sunrise = datetime.fromtimestamp(data['daily'][0]['sunrise'],
-                                     tz=pytz.timezone(
-                                     tzone)).strftime('%Hh:%Mm')
-    sunset = datetime.fromtimestamp(data['daily'][0]['sunset'],
-                                    tz=pytz.timezone(
-                                    tzone)).strftime('%Hh:%Mm')
-    for txt in data['hourly']:
-        hours.append(datetime.fromtimestamp(txt['dt']).strftime("%H"))
-        temps.append(txt['temp'])
-        forecast.append(txt['weather'][0]['description'])
-        humidity.append(txt['humidity'])
-        wind_speed.append(txt['wind_speed'])
-        visibility.append(txt['visibility'])
-        pressure.append(txt['pressure'])
-        for i in range(7):
-            daily_high.append(data['daily'][i]['temp']['max'])
-            daily_low.append(data['daily'][i]['temp']['min'])
-            daily_datetime.append(datetime.fromtimestamp(
-                                  data['daily'][i]['dt']).strftime(
-                                  '%a %b %d'))
+    if data:
+        tzone = data['timezone']
+        icon_id = data['current']['weather'][0]['id']
+        current_temp = data['current']['temp']
+        current_temp_celcius = fahrenheit_to_celcius(current_temp)
+        current_forecast = data['current']['weather'][0]['description']
+        current_low = data['daily'][0]['temp']['min']
+        current_high = data['daily'][0]['temp']['max']
+        sunrise = datetime.fromtimestamp(data['daily'][0]['sunrise'],
+                                         tz=pytz.timezone(
+                                         tzone)).strftime('%Hh:%Mm')
+        sunset = datetime.fromtimestamp(data['daily'][0]['sunset'],
+                                        tz=pytz.timezone(
+                                        tzone)).strftime('%Hh:%Mm')
+        for txt in data['hourly']:
+            hours.append(datetime.fromtimestamp(txt['dt']).strftime("%H"))
+            temps.append(txt['temp'])
+            forecast.append(txt['weather'][0]['description'])
+            humidity.append(txt['humidity'])
+            wind_speed.append(txt['wind_speed'])
+            visibility.append(txt['visibility'])
+            pressure.append(txt['pressure'])
+            for i in range(7):
+                daily_high.append(data['daily'][i]['temp']['max'])
+                daily_low.append(data['daily'][i]['temp']['min'])
+                daily_datetime.append(datetime.fromtimestamp(
+                                      data['daily'][i]['dt']).strftime(
+                                      '%a %b %d'))
     current_weather = {
          'latitude': latitude,
          'longitude': longitude,
