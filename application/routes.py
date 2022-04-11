@@ -142,30 +142,30 @@ def index():
                 daily_datetime.append(datetime.fromtimestamp(
                                       data['daily'][i]['dt']).strftime(
                                       '%a %b %d'))
-    current_weather = {
-         'latitude': latitude,
-         'longitude': longitude,
-         # 'local_address': local_address,
-         'icon_id': icon_id,
-         'daily_high': daily_high,
-         'daily_low': daily_low,
-         'daily_datetime': daily_datetime,
-         'sunrise': sunrise,
-         'sunset': sunset,
-         'current_temp': current_temp,
-         'current_temp_celcius': current_temp_celcius,
-         'current_forecast': current_forecast,
-         'timezone': tzone,
-         'current_low': current_low,
-         'current_high': current_high,
-         'hours': hours,
-         'temps': temps,
-         'forecast': forecast,
-         'humidity': humidity,
-         'wind_speed': wind_speed,
-         'visibility': visibility,
-         'pressure': pressure
-         }
+        current_weather = {
+             'latitude': latitude,
+             'longitude': longitude,
+             # 'local_address': local_address,
+             'icon_id': icon_id,
+             'daily_high': daily_high,
+             'daily_low': daily_low,
+             'daily_datetime': daily_datetime,
+             'sunrise': sunrise,
+             'sunset': sunset,
+             'current_temp': current_temp,
+             'current_temp_celcius': current_temp_celcius,
+             'current_forecast': current_forecast,
+             'timezone': tzone,
+             'current_low': current_low,
+             'current_high': current_high,
+             'hours': hours,
+             'temps': temps,
+             'forecast': forecast,
+             'humidity': humidity,
+             'wind_speed': wind_speed,
+             'visibility': visibility,
+             'pressure': pressure
+             }
 
     if form.validate_on_submit():
         address = request.form['address']
